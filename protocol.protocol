@@ -1,0 +1,206 @@
+<protocol VERSION="4">
+<blocks>
+<block CommandLineID="inputFolder" ID="1272355414" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Input folder" height="61" keepsResults="true" width="169" xLocation="16" yLocation="3">
+<variables>
+<input>
+<variable ID="folder" name="folder" runtime="false" value="C:\Users\Stephane\Desktop\WG5 benchmark\spot detection\2D\real" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="extension" ID="244826341" blockType="plugins.adufour.blocks.tools.input.Text" className="plugins.adufour.blocks.tools.input.Text" collapsed="false" definedName="File extension" height="64" keepsResults="true" width="179" xLocation="15" yLocation="64">
+<variables>
+<input>
+<variable ID="text" name="text" runtime="false" value="tif" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="scale2enable" ID="820218883" blockType="plugins.adufour.blocks.tools.input.Boolean" className="plugins.adufour.blocks.tools.input.Boolean" collapsed="false" definedName="Scale 2 enable" height="63" keepsResults="true" width="181" xLocation="9" yLocation="193">
+<variables>
+<input>
+<variable ID="boolean" name="Boolean" runtime="false" value="false" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="scale3enable" ID="1965169941" blockType="plugins.adufour.blocks.tools.input.Boolean" className="plugins.adufour.blocks.tools.input.Boolean" collapsed="false" definedName="Scale 3 enable" height="63" keepsResults="true" width="181" xLocation="16" yLocation="256">
+<variables>
+<input>
+<variable ID="boolean" name="Boolean" runtime="false" value="false" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="scale2sensitivity" ID="226512901" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Scale 2 sensitivity" height="64" keepsResults="true" width="201" xLocation="15" yLocation="336">
+<variables>
+<input>
+<variable ID="decimal" name="decimal" runtime="false" value="100.0" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="scale3sensitivity" ID="490361387" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Scale 3 sensitivity" height="64" keepsResults="true" width="201" xLocation="13" yLocation="398">
+<variables>
+<input>
+<variable ID="decimal" name="decimal" runtime="false" value="100.0" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="force2Dwavelets" ID="1614302691" blockType="plugins.adufour.blocks.tools.input.Boolean" className="plugins.adufour.blocks.tools.input.Boolean" collapsed="false" definedName="Force 2D Wavelets" height="63" keepsResults="true" width="205" xLocation="12" yLocation="469">
+<variables>
+<input>
+<variable ID="boolean" name="Boolean" runtime="false" value="false" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="csvFileSuffix" ID="1793308938" blockType="plugins.adufour.blocks.tools.input.Text" className="plugins.adufour.blocks.tools.input.Text" collapsed="false" definedName="CSV file suffix" height="64" keepsResults="true" width="182" xLocation="6" yLocation="128">
+<variables>
+<input>
+<variable ID="text" name="text" runtime="false" value="_results" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<workflow ID="1514609598" blockType="plugins.adufour.blocks.lang.FolderLoop" className="plugins.adufour.blocks.lang.FolderLoop" collapsed="false" definedName="Folder loop" height="645" keepsResults="true" width="805" xLocation="274" yLocation="3">
+<blocks>
+<block ID="1281567560" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="false" definedName="File to sequence" height="108" keepsResults="true" width="190" xLocation="274" yLocation="0">
+<variables>
+<input>
+<variable ID="input file" name="input file" runtime="false" visible="true"/>
+<variable ID="Series" name="Series" runtime="false" value="0" visible="true"/>
+</input>
+<output>
+<variable ID="sequence" name="sequence" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="394843465" blockType="plugins.adufour.blocks.tools.io.AppendFilePath" className="plugins.adufour.blocks.tools.io.AppendFilePath" collapsed="false" definedName="Append file path" height="132" keepsResults="true" width="221" xLocation="509" yLocation="32">
+<variables>
+<input>
+<variable ID="input file" name="Current file" runtime="false" type="java.io.File" visible="true"/>
+<variable ID="remove ext." name="Remove extension" runtime="false" value="true" visible="true"/>
+<variable ID="suffix" name="Add suffix" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output file" name="New file" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1757194409" blockType="plugins.fab.waveletspotdetectorblock.WaveletSpotDetectorBlock" className="plugins.fab.waveletspotdetectorblock.WaveletSpotDetectorBlock" collapsed="false" definedName="Wavelet Spot Detector Block" height="464" keepsResults="true" width="325" xLocation="46" yLocation="124">
+<variables>
+<input>
+<variable ID="input Sequence" name="input Sequence" runtime="false" visible="true"/>
+<variable ID="Spot to detect" name="Spot to detect" runtime="false" value="BRIGHT_SPOT" visible="true"/>
+<variable ID="input Sequence ROIs" name="ROIs from sequence for WAT" runtime="false" value="Active Sequence" visible="true"/>
+<variable ID="Compute WAT considering ROI" name="Compute WAT considering ROI" runtime="false" value="false" visible="true"/>
+<variable ID="ROIs for detection mask" name="ROIs for detection mask" runtime="false" value="" visible="true"/>
+<variable ID="Scale 1" name="Scale 1" runtime="false" value="false" visible="true"/>
+<variable ID="Scale 2" name="Scale 2" runtime="false" visible="true"/>
+<variable ID="Scale 3" name="Scale 3" runtime="false" visible="true"/>
+<variable ID="Scale 4" name="Scale 4" runtime="false" value="false" visible="true"/>
+<variable ID="Scale 5" name="Scale 5" runtime="false" value="false" visible="true"/>
+<variable ID="Th. scale 1:" name="Th. scale 1:" runtime="false" value="100" visible="false"/>
+<variable ID="Th. scale 2:" name="Th. scale 2:" runtime="false" visible="false"/>
+<variable ID="Th. scale 3:" name="Th. scale 3:" runtime="false" visible="false"/>
+<variable ID="Th. scale 4:" name="Th. scale 4:" runtime="false" value="100" visible="false"/>
+<variable ID="Th. scale 5:" name="Th. scale 5:" runtime="false" value="100" visible="false"/>
+<variable ID="Force 2D Wavelets" name="Force 2D Wavelets" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="binary Spot Sequence" name="binary Spot Sequence" runtime="false" visible="true"/>
+<variable ID="detection as ROIs" name="detection as ROIs" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="681413093" blockType="plugins.adufour.roi.ROIMeasures" className="plugins.adufour.roi.ROIMeasures" collapsed="false" definedName="ROI Statistics" height="128" keepsResults="true" width="262" xLocation="406" yLocation="405">
+<variables>
+<input>
+<variable ID="measures" name="Select features..." runtime="false" value="6" visible="true"/>
+<variable ID="Regions of interest" name="Regions of interest" runtime="false" visible="true"/>
+<variable ID="Sequence" name="Sequence" runtime="false" value="Active Sequence" visible="true"/>
+</input>
+<output>
+<variable ID="Workbook" name="Workbook" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1054332238" blockType="plugins.adufour.blocks.tools.io.WorkbookToFile" className="plugins.adufour.blocks.tools.io.WorkbookToFile" collapsed="false" definedName="Workbook to file" height="149" keepsResults="true" width="317" xLocation="410" yLocation="198">
+<variables>
+<input>
+<variable ID="workbook" name="workbook" runtime="false" visible="true"/>
+<variable ID="file format" name="file format" runtime="false" value="Text" visible="true"/>
+<variable ID="output file" name="output file" runtime="false" visible="true"/>
+<variable ID="If file exists" name="If file exists" runtime="false" value="Overwrite" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="1281567560" dstVarID="input file" srcBlockID="1514609598" srcVarID="file"/>
+<link dstBlockID="1757194409" dstVarID="input Sequence" srcBlockID="1281567560" srcVarID="sequence"/>
+<link dstBlockID="394843465" dstVarID="input file" srcBlockID="1281567560" srcVarID="input file"/>
+<link dstBlockID="1054332238" dstVarID="output file" srcBlockID="394843465" srcVarID="output file"/>
+<link dstBlockID="681413093" dstVarID="Regions of interest" srcBlockID="1757194409" srcVarID="detection as ROIs"/>
+<link dstBlockID="1054332238" dstVarID="workbook" srcBlockID="681413093" srcVarID="Workbook"/>
+</links>
+<variables>
+<input>
+<variable ID="folder" blockID="1514609598" value="" visible="true"/>
+<variable ID="extension" blockID="1514609598" value="tif" visible="true"/>
+<variable ID="Include sub-folders" blockID="1514609598" value="true" visible="true"/>
+<variable ID="1281567560:input file" blockID="1281567560" value="" visible="false"/>
+<variable ID="1281567560:Series" blockID="1281567560" value="0" visible="false"/>
+<variable ID="394843465:input file" blockID="394843465" value="" visible="false"/>
+<variable ID="394843465:remove ext." blockID="394843465" value="true" visible="false"/>
+<variable ID="394843465:suffix" blockID="394843465" value="_results" visible="true"/>
+<variable ID="1757194409:input Sequence" blockID="1757194409" value="Active Sequence" visible="false"/>
+<variable ID="1757194409:Spot to detect" blockID="1757194409" value="BRIGHT_SPOT" visible="false"/>
+<variable ID="1757194409:input Sequence ROIs" blockID="1757194409" value="Active Sequence" visible="false"/>
+<variable ID="1757194409:Compute WAT considering ROI" blockID="1757194409" value="false" visible="false"/>
+<variable ID="1757194409:ROIs for detection mask" blockID="1757194409" value="" visible="false"/>
+<variable ID="1757194409:Scale 1" blockID="1757194409" value="false" visible="false"/>
+<variable ID="1757194409:Scale 2" blockID="1757194409" value="false" visible="true"/>
+<variable ID="1757194409:Scale 3" blockID="1757194409" value="false" visible="true"/>
+<variable ID="1757194409:Scale 4" blockID="1757194409" value="false" visible="false"/>
+<variable ID="1757194409:Scale 5" blockID="1757194409" value="false" visible="false"/>
+<variable ID="1757194409:Th. scale 1:" blockID="1757194409" value="100" visible="false"/>
+<variable ID="1757194409:Th. scale 2:" blockID="1757194409" value="100" visible="true"/>
+<variable ID="1757194409:Th. scale 3:" blockID="1757194409" value="100" visible="true"/>
+<variable ID="1757194409:Th. scale 4:" blockID="1757194409" value="100" visible="false"/>
+<variable ID="1757194409:Th. scale 5:" blockID="1757194409" value="100" visible="false"/>
+<variable ID="1757194409:Force 2D Wavelets" blockID="1757194409" value="false" visible="true"/>
+<variable ID="681413093:measures" blockID="681413093" value="6" visible="false"/>
+<variable ID="681413093:Regions of interest" blockID="681413093" value="No ROI" visible="false"/>
+<variable ID="681413093:Sequence" blockID="681413093" value="Active Sequence" visible="false"/>
+<variable ID="1054332238:workbook" blockID="1054332238" value="" visible="false"/>
+<variable ID="1054332238:file format" blockID="1054332238" value="Text" visible="false"/>
+<variable ID="1054332238:output file" blockID="1054332238" value="" visible="false"/>
+<variable ID="1054332238:If file exists" blockID="1054332238" value="Overwrite" visible="false"/>
+</input>
+<output>
+<variable ID="iteration" blockID="1514609598" visible="true"/>
+<variable ID="file" blockID="1514609598" visible="true"/>
+<variable ID="1281567560:sequence" blockID="1281567560" visible="false"/>
+<variable ID="394843465:output file" blockID="394843465" visible="false"/>
+<variable ID="1757194409:binary Spot Sequence" blockID="1757194409" visible="false"/>
+<variable ID="1757194409:detection as ROIs" blockID="1757194409" visible="false"/>
+<variable ID="681413093:Workbook" blockID="681413093" visible="false"/>
+</output>
+</variables>
+</workflow>
+</blocks>
+<links>
+<link dstBlockID="1514609598" dstVarID="folder" srcBlockID="1272355414" srcVarID="folder"/>
+<link dstBlockID="1514609598" dstVarID="extension" srcBlockID="244826341" srcVarID="text"/>
+<link dstBlockID="1514609598" dstVarID="1757194409:Scale 2" srcBlockID="820218883" srcVarID="boolean"/>
+<link dstBlockID="1514609598" dstVarID="1757194409:Scale 3" srcBlockID="1965169941" srcVarID="boolean"/>
+<link dstBlockID="1514609598" dstVarID="1757194409:Th. scale 2:" srcBlockID="226512901" srcVarID="decimal"/>
+<link dstBlockID="1514609598" dstVarID="1757194409:Th. scale 3:" srcBlockID="490361387" srcVarID="decimal"/>
+<link dstBlockID="1514609598" dstVarID="1757194409:Force 2D Wavelets" srcBlockID="1614302691" srcVarID="boolean"/>
+<link dstBlockID="1514609598" dstVarID="394843465:suffix" srcBlockID="1793308938" srcVarID="text"/>
+</links>
+</protocol>
