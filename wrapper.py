@@ -15,7 +15,8 @@ def readcoords(fname):
 	Y = []
 	F = open(fname,'r')
 	i = 1
-	for l in F.readlines():
+	for index,l in enumerate(F.readlines()):
+                if index==0: continue
 		t = l.split(',')
 		X.append(float(t[1]))
 		Y.append(float(t[2]))
@@ -27,8 +28,8 @@ baseOutputFolder = "/dockershare/";
 
 parser = ArgumentParser(prog="Icy-SpotDetection.py", description="Icy workflow to detect spots in 2D images")
 parser.add_argument('--cytomine_host', dest="cytomine_host", default='http://localhost-core')
-parser.add_argument('--cytomine_public_key', dest="cytomine_public_key", default="77af7d84-b737-4489-8864-d5ad93f4700b")
-parser.add_argument('--cytomine_private_key', dest="cytomine_private_key", default="3ef1f34e-2a9e-4ff8-96ec-df8e57c7dfcd")
+parser.add_argument('--cytomine_public_key', dest="cytomine_public_key", default="")
+parser.add_argument('--cytomine_private_key', dest="cytomine_private_key", default="")
 parser.add_argument("--cytomine_id_project", dest="cytomine_id_project", default="5378")
 parser.add_argument("--icy_scale3sensitivity", dest="scale3sens", default="40")
 
@@ -92,16 +93,15 @@ files = os.listdir(outDir)
 job = conn.update_job_status(job, status = job.RUNNING, progress = 50, status_comment = "Extracting polygons...")
 
 for image in images:
-	file = str(image.id) + ".tif.csv"
-	path = outDir + "/" + file
+	file = str(image.id) + "_results.txt"
+	path = inDir + "/" + file
 	if(os.path.isfile(path)):
 		imageData = io.imread(path)
 		(X,Y) = readcoords(fname)
-	  	for i in range(len(terms)):
+	  	for i in range(len(X)):
 			circle = Point(X[i],image.height-Y[i])
 			annotation.location=circle.wkt
 			new_annotation = conn.add_annotation(annotation.location, image.id)
-			conn.add_user_annotation_term(new_annotation.id, term=terms[i])
 	else:
 		print path + " does not exist"
 
