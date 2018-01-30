@@ -80,7 +80,7 @@ for image in images:
 # call the image analysis workflow in the docker image
 shArgs = "data/in "+scale3sens
 job = conn.update_job_status(job, status = job.RUNNING, progress = 25, status_comment = "Launching workflow...")
-command = "docker run --rm -v "+jobFolder+":/icy/data neubiaswg5/spotdetection-icy " + shArgs
+command = "docker run --rm -v "+jobFolder+":/icy/data neubiaswg5/w_spotdetection-icy " + shArgs
 call(command,shell=True)	# waits for the subprocess to return
 
 # remove existing annotations if any
