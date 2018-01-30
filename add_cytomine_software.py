@@ -5,14 +5,14 @@ def add_software(cytomine_host, cytomine_public_key, cytomine_private_key, id_pr
     #Connection to Cytomine Core
     conn = cytomine.Cytomine(cytomine_host, cytomine_public_key, cytomine_private_key, base_path = '/api/', working_path = '/tmp/', verbose= True)
 
-    execute_command = "python algo/icy_spot_detection/wrapper.py --icy_scale3sensitivity $icy_scale3sensitivity " \
+    execute_command = "python algo/W_SpotDetection-Icy/wrapper.py --icy_scale3sensitivity $icy_scale3sensitivity " \
                       + "--cytomine_host $host " \
                       + "--cytomine_public_key $publicKey " \
                       + "--cytomine_private_key $privateKey " \
                       + "--cytomine_id_project $cytomine_id_project "
 
     #define software parameter template
-    software = conn.add_software("Icy_Spot_Detection", "createRabbitJobWithArgsService","ValidateAnnotation", execute_command)
+    software = conn.add_software("W_SpotDetection-Icy", "createRabbitJobWithArgsService","ValidateAnnotation", execute_command)
     conn.add_software_parameter("icy_scale3sensitivity", software.id, "Number", 40, True, 10, False)
 
 
