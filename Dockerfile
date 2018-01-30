@@ -4,7 +4,7 @@ ADD protocol.protocol /icy/protocols/protocol.protocol
 
 ADD run.sh /icy/run.sh
 
-RUN
+RUN \
       cd /icy/plugins/adufour/blocks  && \
       wget -O Blocks.jar http://www.bioimageanalysis.org/icy/repository/getJarFile.php?pluginId=180&beta=0 && \
       cd /icy/plugins/adufour/roi && \
