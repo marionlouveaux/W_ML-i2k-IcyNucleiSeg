@@ -16,7 +16,7 @@ def readcoords(fname):
 	F = open(fname,'r')
 	i = 1
 	for index,l in enumerate(F.readlines()):
-                if index==0: continue
+                if index<2: continue  #skip two first lines in icy output
 		t = l.split(',')
 		X.append(float(t[1]))
 		Y.append(float(t[2]))
@@ -71,6 +71,8 @@ if not os.path.exists(outDir):
 # download the images
 for image in images:
 	# url format: CYTOMINEURL/api/imageinstance/$idOfMyImageInstance/download
+	if "_lbl." in image.filename:  #exclude label image (shoud filter on property instead of filename)
+		continue
 	url = cytomine_host+"/api/imageinstance/" + str(image.id) + "/download"
 	filename = str(image.id) + ".tif"
 	conn.fetch_url_into_file(url, inDir+"/"+filename, True, True) 
@@ -96,7 +98,6 @@ for image in images:
 	file = str(image.id) + "_results.txt"
 	path = inDir + "/" + file
 	if(os.path.isfile(path)):
-		imageData = io.imread(path)
 		(X,Y) = readcoords(fname)
 	  	for i in range(len(X)):
 			circle = Point(X[i],image.height-Y[i])
@@ -110,11 +111,9 @@ job = conn.update_job_status(job, status = job.TERMINATED, progress = 90, status
 
 for image in images:
 	file = str(image.id) + ".tif"
-	path = outDir + "/" + file
-	os.remove(path);
 	path = inDir + "/" + file
 	os.remove(path);
-        path = inDir + "/" + file + ".csv"
+        path = inDir + "/" + str(image.id) + "_results.txt"
         os.remove(path)
 
 job = conn.update_job_status(job, status = job.TERMINATED, progress = 100, status_comment =  "Finished Job..")
