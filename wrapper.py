@@ -16,17 +16,19 @@ def readcoords(fname):
 	F = open(fname,'r')
 	i = 1
 	for index,l in enumerate(F.readlines()):
-                if index==0: continue
-		t = l.split(',')
-		X.append(float(t[1]))
-		Y.append(float(t[2]))
+                if index<2: continue
+		t = l.split('\t')
+                print t
+                if len(t)>1:
+		        X.append(float(t[5]))
+		        Y.append(float(t[6]))
 		i=i+1
 	F.close()
 	return X,Y
 
 baseOutputFolder = "/dockershare/";
 
-parser = ArgumentParser(prog="IcySpotDetection", description="Icy workflow protocol to detect spots in 2D images")
+parser = ArgumentParser(prog="Icy-SpotDetection.py", description="Icy workflow to detect spots in 2D images")
 parser.add_argument('--cytomine_host', dest="cytomine_host", default='http://localhost-core')
 parser.add_argument('--cytomine_public_key', dest="cytomine_public_key", default="")
 parser.add_argument('--cytomine_private_key', dest="cytomine_private_key", default="")
@@ -90,7 +92,7 @@ for image in images:
 files = os.listdir(outDir)
 
 
-job = conn.update_job_status(job, status = job.RUNNING, progress = 50, status_comment = "Extracting points...")
+job = conn.update_job_status(job, status = job.RUNNING, progress = 50, status_comment = "Extracting polygons...")
 
 for image in images:
 	file = str(image.id) + "_results.txt"
@@ -104,16 +106,19 @@ for image in images:
 	else:
 		print path + " does not exist"
 
+
+#should launch the metrics computation here
+                
 # cleanup - remove the downloaded images and the images created by the workflow
 job = conn.update_job_status(job, status = job.TERMINATED, progress = 90, status_comment =  "Cleaning up..")
 
 for image in images:
-	#file = str(image.id) + ".tif"
+	file = str(image.id) + ".tif"
 	#path = outDir + "/" + file
-	os.remove(path);
+	#os.remove(path);
 	path = inDir + "/" + file
 	os.remove(path);
-        path = inDir + "/" + file + "_results.txt"
+        path = inDir + "/" + str(image.id) + "_results.txt"
         os.remove(path)
 
 job = conn.update_job_status(job, status = job.TERMINATED, progress = 100, status_comment =  "Finished Job..")
