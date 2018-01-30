@@ -16,7 +16,7 @@ def readcoords(fname):
 	F = open(fname,'r')
 	i = 1
 	for index,l in enumerate(F.readlines()):
-                if index<2: continue  #skip two first lines in icy output
+                if index==0: continue
 		t = l.split(',')
 		X.append(float(t[1]))
 		Y.append(float(t[2]))
@@ -26,7 +26,7 @@ def readcoords(fname):
 
 baseOutputFolder = "/dockershare/";
 
-parser = ArgumentParser(prog="Icy-SpotDetection.py", description="Icy workflow to detect spots in 2D images")
+parser = ArgumentParser(prog="IcySpotDetection", description="Icy workflow protocol to detect spots in 2D images")
 parser.add_argument('--cytomine_host', dest="cytomine_host", default='http://localhost-core')
 parser.add_argument('--cytomine_public_key', dest="cytomine_public_key", default="")
 parser.add_argument('--cytomine_private_key', dest="cytomine_private_key", default="")
@@ -49,7 +49,7 @@ user_job = current_user
 
 job = conn.get_job(user_job.job)
 
-job = conn.update_job_status(job, status = job.RUNNING, progress = 0, status_comment = "Loading images...")
+job = conn.update_job_status(job, status = job.RUNNING, progress = 0, status_comment = "Loading images from Cytomine...")
 
 # Get the list of images in the project
 image_instances = ImageInstanceCollection()
@@ -71,8 +71,6 @@ if not os.path.exists(outDir):
 # download the images
 for image in images:
 	# url format: CYTOMINEURL/api/imageinstance/$idOfMyImageInstance/download
-	if "_lbl." in image.filename:  #exclude label image (shoud filter on property instead of filename)
-		continue
 	url = cytomine_host+"/api/imageinstance/" + str(image.id) + "/download"
 	filename = str(image.id) + ".tif"
 	conn.fetch_url_into_file(url, inDir+"/"+filename, True, True) 
@@ -92,13 +90,13 @@ for image in images:
 files = os.listdir(outDir)
 
 
-job = conn.update_job_status(job, status = job.RUNNING, progress = 50, status_comment = "Extracting polygons...")
+job = conn.update_job_status(job, status = job.RUNNING, progress = 50, status_comment = "Extracting points...")
 
 for image in images:
 	file = str(image.id) + "_results.txt"
 	path = inDir + "/" + file
 	if(os.path.isfile(path)):
-		(X,Y) = readcoords(fname)
+		(X,Y) = readcoords(path)
 	  	for i in range(len(X)):
 			circle = Point(X[i],image.height-Y[i])
 			annotation.location=circle.wkt
@@ -110,10 +108,12 @@ for image in images:
 job = conn.update_job_status(job, status = job.TERMINATED, progress = 90, status_comment =  "Cleaning up..")
 
 for image in images:
-	file = str(image.id) + ".tif"
+	#file = str(image.id) + ".tif"
+	#path = outDir + "/" + file
+	os.remove(path);
 	path = inDir + "/" + file
 	os.remove(path);
-        path = inDir + "/" + str(image.id) + "_results.txt"
+        path = inDir + "/" + file + "_results.txt"
         os.remove(path)
 
 job = conn.update_job_status(job, status = job.TERMINATED, progress = 100, status_comment =  "Finished Job..")
