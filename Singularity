@@ -9,4 +9,5 @@ From: neubiaswg5/icy-base:latest
 	cd /icy && chmod a+x run.sh
 
 %runscript
+	echo "start"
 	/bin/sh ./icy/run.sh
