@@ -11,4 +11,4 @@ From: neubiaswg5/icy-base:latest
 	cd /icy && chmod a+x wrapper.py
 
 %runscript
-	./icy/wrapper.py
+	python /icy/wrapper.py
