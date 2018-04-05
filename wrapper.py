@@ -59,10 +59,13 @@ image_instances.project  =  id_project
 image_instances  =  conn.fetch(image_instances)
 images = image_instances.data()
 
-# create the folder structure for the folders shared with docker 
-jobFolder = baseOutputFolder + str(job.id) + "/"
+# create the folder structure for the folders shared with docker
+# jobFolder = baseOutputFolder + str(job.id) + "/"
+jobFolder = "/icy/data/"
 inDir = jobFolder + "in"
 outDir = jobFolder + "out"
+
+
 
 if not os.path.exists(inDir):
     os.makedirs(inDir)
@@ -75,12 +78,15 @@ for image in images:
 	# url format: CYTOMINEURL/api/imageinstance/$idOfMyImageInstance/download
 	url = cytomine_host+"/api/imageinstance/" + str(image.id) + "/download"
 	filename = str(image.id) + ".tif"
-	conn.fetch_url_into_file(url, inDir+"/"+filename, True, True) 
+	conn.fetch_url_into_file(url, inDir+"/"+filename, True, True)
 
 # call the image analysis workflow in the docker image
 shArgs = "data/in "+scale3sens
 job = conn.update_job_status(job, status = job.RUNNING, progress = 25, status_comment = "Launching workflow...")
-command = "docker run --rm -v "+jobFolder+":/icy/data neubiaswg5/w_spotdetection-icy " + shArgs
+
+command = "/icy/run.sh " + shArgs
+
+#command = "docker run --rm -v "+jobFolder+":/icy/data neubiaswg5/w_spotdetection-icy " + shArgs
 call(command,shell=True)	# waits for the subprocess to return
 
 # remove existing annotations if any
@@ -108,7 +114,7 @@ for image in images:
 
 
 #should launch the metrics computation here
-                
+
 # cleanup - remove the downloaded images and the images created by the workflow
 job = conn.update_job_status(job, status = job.TERMINATED, progress = 90, status_comment =  "Cleaning up..")
 
