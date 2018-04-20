@@ -78,34 +78,26 @@ with CytomineJob(params.cytomine_host, params.cytomine_public_key, params.cytomi
 
     cj.job.update(progress=60, statusComment="Extracting polygons...")
 
-    for image in input_images:
-        file = "{}.tif".format(image.id)
-        path = os.path.join(out_path, file)
-
-        data = io.imread(path)
-        indexes = np.unique(data)
-        loc = locator.BinaryLocator()
-        objects = dict()
-
-        for i, index in enumerate(indexes):
-            if not index == 0:
-                mask = (data == index).astype(np.uint8) * 255
-                polygons = [polygon[0].buffer(2.0) for polygon in loc.locate(mask)]
-                polygon = cascaded_union(polygons).buffer(-2.0)
-                if not polygon.is_empty and polygon.area > 0:
-                    objects[index] = polygon
-
-        print("Found {} polygons in this image {}.".format(len(objects), image.id))
-
-        # upload
-        for index, polygon in objects.items():
-            annotation = add_annotation(image, polygon)
-            if annotation:
-                Property(annotation, "index", str(index)).save()
-
+    for image in images:
+    file = str(image.id) + "_results.txt"
+    path = inDir + "/" + file
+    if(os.path.isfile(path)):
+        (X,Y) = readcoords(path)
+        for i in range(len(X)):
+            circle = Point(X[i],image.height-Y[i])
+            annotation.location=circle.wkt
+            new_annotation = conn.add_annotation(annotation.location, image.id)
+    else:
+        print(path + " does not exist")
 
     cj.job.update(progress=99, statusComment="Cleaning...")
-    for image in input_images:
-        os.remove(os.path.join(in_path, "{}.tif".format(image.id)))
+    for image in images:
+    	file = str(image.id) + ".tif"
+    	#path = outDir + "/" + file
+    	#os.remove(path);
+    	path = inDir + "/" + file
+    	os.remove(path);
+    	path = inDir + "/" + str(image.id) + "_results.txt"
+    	os.remove(path)
 
     cj.job.update(status=Job.TERMINATED, progress=100, statusComment="Finished.")
