@@ -43,6 +43,7 @@ parser.add_argument("--cytomine_id_software", dest="cytomine_id_software", defau
 parser.add_argument("--icy_scale3sensitivity", dest="scale3sens", default="40")
 params, others = parser.parse_known_args(sys.argv)
 
+gt_suffix = "_lbl"
 base_path = "/icy/data"
 
 with CytomineJob(params.cytomine_host, params.cytomine_public_key, params.cytomine_private_key, params.cytomine_id_software, params.cytomine_id_project, verbose=logging.INFO) as cj:
