@@ -39,6 +39,7 @@ parser.add_argument('--cytomine_host', dest="cytomine_host", default='http://loc
 parser.add_argument('--cytomine_public_key', dest="cytomine_public_key", default="")
 parser.add_argument('--cytomine_private_key', dest="cytomine_private_key", default="")
 parser.add_argument("--cytomine_id_project", dest="cytomine_id_project", default="5378")
+parser.add_argument("--cytomine_id_software", dest="cytomine_id_software", default="")
 parser.add_argument("--icy_scale3sensitivity", dest="scale3sens", default="40")
 params, others = parser.parse_known_args(sys.argv)
 
