@@ -31,7 +31,7 @@ def add_annotation(img_inst, polygon, label=None, proba=1.0):
 
 def makedirs(path):
     if not os.path.exists(path):
-os.makedirs(path)
+        os.makedirs(path)
 
 
 parser = ArgumentParser(prog="Icy-SpotDetection.py", description="Icy workflow to detect spots in 2D images")
