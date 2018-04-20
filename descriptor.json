@@ -1,8 +1,8 @@
 {
     "command-line": "[CYTOMINE_HOST] [CYTOMINE_PUBLIC_KEY] [CYTOMINE_PRIVATE_KEY] [CYTOMINE_ID_PROJECT] [CYTOMINE_ID_SOFTWARE] [ICY_SCALE3SENSITIVITY]",
     "container-image": {
-        "image": "GiMichiels/W_SpotDetection-Icy",
-        "index": "shub",
+        "image": "gmichiels/w_spotdetection-icy",
+        "index": "docker",
         "type": "singularity"
     },
     "processing-server-name": "local-container",
