@@ -5,7 +5,7 @@
         "index": "docker",
         "type": "singularity"
     },
-    "processing-server-name": "local-container",
+    "default-processing-server-name": "local-container",
     "description": "A Cytomine template descriptor",
     "inputs": [
         {
