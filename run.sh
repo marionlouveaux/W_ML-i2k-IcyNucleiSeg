@@ -1,3 +1,4 @@
+#!/bin/bash
 #fullpaths for lib, jar, protocol
 #launch it from icy directory
 cd /icy/
