@@ -33,7 +33,7 @@ def makedirs(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
-baseOutputFolder = "/icy/data"
+base_path = "/icy/data"
 
 parser = ArgumentParser(prog="Icy-SpotDetection.py", description="Icy workflow to detect spots in 2D images")
 parser.add_argument('--cytomine_host', dest="cytomine_host", default='http://localhost-core')
