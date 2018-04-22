@@ -6,7 +6,7 @@ from subprocess import call
 
 import numpy as np
 from cytomine import CytomineJob
-from cytomine.models import Annotation, AnnotationTerm, Job, ImageInstanceCollection, Property
+from cytomine.models import Annotation, AnnotationTerm, Job, ImageInstanceCollection, Property, AnnotationCollection
 from shapely.ops import cascaded_union
 from shapely.affinity import affine_transform
 from skimage import io
