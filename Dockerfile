@@ -10,6 +10,8 @@ FROM gmichiels/python-client-base
 RUN conda install scikit-image --yes
 RUN conda install joblib=0.11 --yes
 
+COPY --from=base /icy /icy
+
 ADD wrapper.py /icy/wrapper.py
 RUN cd /icy && chmod a+x wrapper.py
 
