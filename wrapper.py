@@ -61,9 +61,11 @@ with CytomineJob(params.cytomine_host, params.cytomine_public_key, params.cytomi
         image.download(os.path.join(in_path, "{id}.tif"))
 
     for image in images:
-        annotations = Annotation().fetch(image.id)
+        annotations = AnnotationCollection()
+        annotations.image = image.id
+        annotations.fetch()
         for annotation in annotations:
-            annotation.delete()
+            annotation.delete()       
 
     cj.job.update(progress=25, statusComment="Launching workflow...")
 
