@@ -76,7 +76,7 @@ with CytomineJob(params.cytomine_host, params.cytomine_public_key, params.cytomi
 
     for image in images:
         file = str(image.id) + "_results.txt"
-        path = inDir + "/" + file
+        path = in_path + "/" + file
         if(os.path.isfile(path)):
             (X,Y) = readcoords(path)
             for i in range(len(X)):
@@ -91,9 +91,9 @@ with CytomineJob(params.cytomine_host, params.cytomine_public_key, params.cytomi
     	file = str(image.id) + ".tif"
     	#path = outDir + "/" + file
     	#os.remove(path);
-    	path = inDir + "/" + file
+    	path = in_path + "/" + file
     	os.remove(path);
-    	path = inDir + "/" + str(image.id) + "_results.txt"
+    	path = in_path + "/" + str(image.id) + "_results.txt"
     	os.remove(path)
 
     cj.job.update(status=Job.TERMINATED, progress=100, statusComment="Finished.")
