@@ -12,22 +12,6 @@ from shapely.affinity import affine_transform
 from skimage import io
 from sldc import locator
 
-def add_annotation(img_inst, polygon, label=None, proba=1.0):
-    image_id = img_inst.id
-    # Transform in cartesian coordinates
-    polygon = affine_transform(polygon, [1, 0, 0, -1, 0, img_inst.height])
-
-    annotation = Annotation(polygon.wkt, image_id).save()
-    if label is not None and annotation is not None:
-        annotation_term = AnnotationTerm()
-        annotation_term.annotation = annotation.id
-        annotation_term.annotationIdent = annotation.id
-        annotation_term.userannotation = annotation.id
-        annotation_term.term = label
-        annotation_term.expectedTerm = label
-        annotation_term.rate = proba
-        annotation_term.save()
-    return annotation
 
 def makedirs(path):
     if not os.path.exists(path):
@@ -86,7 +70,7 @@ with CytomineJob(params.cytomine_host, params.cytomine_public_key, params.cytomi
         for i in range(len(X)):
             circle = Point(X[i],image.height-Y[i])
             annotation.location=circle.wkt
-            new_annotation = conn.add_annotation(annotation.location, image.id)
+            new_annotation = Annotation(annotation.location, image.id).save()
     else:
         print(path + " does not exist")
 
