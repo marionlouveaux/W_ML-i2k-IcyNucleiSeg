@@ -1,4 +1,4 @@
-FROM neubiaswg5/icy-base:latest
+FROM neubiaswg5/icy-base:latest as base
 
 ADD protocol.protocol /icy/protocols/protocol.protocol
 ADD run.sh /icy/run.sh
