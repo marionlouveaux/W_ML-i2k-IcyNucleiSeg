@@ -63,16 +63,16 @@ with CytomineJob(params.cytomine_host, params.cytomine_public_key, params.cytomi
     cj.job.update(progress=60, statusComment="Extracting polygons...")
 
     for image in images:
-    file = str(image.id) + "_results.txt"
-    path = inDir + "/" + file
-    if(os.path.isfile(path)):
-        (X,Y) = readcoords(path)
-        for i in range(len(X)):
-            circle = Point(X[i],image.height-Y[i])
-            annotation.location=circle.wkt
-            new_annotation = Annotation(annotation.location, image.id).save()
-    else:
-        print(path + " does not exist")
+        file = str(image.id) + "_results.txt"
+        path = inDir + "/" + file
+        if(os.path.isfile(path)):
+            (X,Y) = readcoords(path)
+            for i in range(len(X)):
+                circle = Point(X[i],image.height-Y[i])
+                annotation.location=circle.wkt
+                new_annotation = Annotation(annotation.location, image.id).save()
+        else:
+            print(path + " does not exist")
 
     cj.job.update(progress=99, statusComment="Cleaning...")
     for image in images:
