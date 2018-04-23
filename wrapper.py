@@ -82,8 +82,8 @@ with CytomineJob(params.cytomine_host, params.cytomine_public_key, params.cytomi
             (X,Y) = readcoords(path)
             for i in range(len(X)):
                 circle = Point(X[i],image.height-Y[i])
-                annotation.location=circle.wkt
-                new_annotation = Annotation(annotation.location, image.id).save()
+                annot.location=circle.wkt
+                new_annotation = Annotation(annot.location, image.id).save()
         else:
             print(path + " does not exist")
 
