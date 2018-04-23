@@ -1,7 +1,7 @@
 {
     "command-line": "[CYTOMINE_HOST] [CYTOMINE_PUBLIC_KEY] [CYTOMINE_PRIVATE_KEY] [CYTOMINE_ID_PROJECT] [CYTOMINE_ID_SOFTWARE] [ICY_SCALE3SENSITIVITY]",
     "container-image": {
-        "image": "gmichiels/w_spotdetection-icy",
+        "image": "GiMichiels/W_SpotDetection-Icy",
         "index": "shub",
         "type": "singularity"
     },
