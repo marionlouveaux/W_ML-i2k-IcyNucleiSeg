@@ -5,7 +5,7 @@
         "index": "docker",
         "type": "singularity"
     },
-    "default-processing-server-name": "GIGA-grid",
+    "default-processing-server-name": "Eddard",
     "description": "SpotDetection-Icy",
     "inputs": [
         {
