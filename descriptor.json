@@ -5,8 +5,8 @@
         "index": "docker",
         "type": "singularity"
     },
-    "default-processing-server-name": "local-container",
-    "description": "A Cytomine template descriptor",
+    "default-processing-server-name": "GIGA-grid",
+    "description": "SpotDetection-Icy",
     "inputs": [
         {
             "id": "cytomine_id_software",
@@ -50,7 +50,7 @@
         "title": "Cytomine-template.invocationSchema",
         "type": "object"
     },
-    "name": "Cytomine-template",
+    "name": "SpotDetection-Icy",
     "schema-version": "0.5",
     "tool-version": "1.0"
 }
