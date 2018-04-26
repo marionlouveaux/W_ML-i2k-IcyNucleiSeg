@@ -5,7 +5,7 @@
         "index": "docker",
         "type": "singularity"
     },
-    "default-processing-server-name": "Eddard",
+    "default-processing-server-name": "local-container",
     "description": "SpotDetection-Icy",
     "inputs": [
         {
