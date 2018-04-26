@@ -48,6 +48,8 @@ RUN mkdir /icy/data
 RUN mkdir /icy/data/in
 RUN mkdir /icy/protocols
 
+RUN chmod 0777 /icy/data/
+
 ADD protocol.protocol /icy/protocols/protocol.protocol
 ADD run.sh /icy/run.sh
 
