@@ -31,7 +31,9 @@
             "optional": true,
             "set-by-server": false,
             "type": "number",
-            "value-key": "[ICY_SCALE3SENSITIVITY]"
+            "value-key": "[ICY_SCALE3SENSITIVITY]",
+            "minimum": 1,
+            "maximum": 100
         }
     ],
     "invocation-schema": {
