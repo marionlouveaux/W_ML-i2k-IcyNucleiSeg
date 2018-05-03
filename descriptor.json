@@ -34,6 +34,16 @@
             "value-key": "[ICY_SCALE3SENSITIVITY]",
             "minimum": 1,
             "maximum": 100
+        },
+        {
+            "id": "time",
+            "name": "time",
+            "default-value": "00:10:00",
+            "optional": false,
+            "set-by-server": false,
+            "type": "date",
+            "minimum": "00:05:00",
+            "maximum": "00:15:00"
         }
     ],
     "invocation-schema": {
