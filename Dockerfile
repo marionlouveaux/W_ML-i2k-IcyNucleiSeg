@@ -1,4 +1,4 @@
-FROM gmichiels/python-client-base
+#FROM gmichiels/python-client-base
 
 RUN conda install scikit-image --yes
 RUN conda install joblib=0.11 --yes
