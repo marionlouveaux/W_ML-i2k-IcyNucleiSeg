@@ -1,71 +1,72 @@
 {
-    "command-line": "[CYTOMINE_HOST] [CYTOMINE_PUBLIC_KEY] [CYTOMINE_PRIVATE_KEY] [CYTOMINE_ID_PROJECT] [CYTOMINE_ID_SOFTWARE] [ICY_SCALE3SENSITIVITY]",
+    "name": "SpotDetection-Icy",
     "container-image": {
-        "image": "urubens/w_spotdetection-icy",
-        "index": "docker",
+        "image": "rmormont/w_spotdetection_icy",
         "type": "singularity"
     },
-    "name": "SpotDetection-Icy",
-    "description": "SpotDetection-Icy, a software to detect spots with Icy.",
+    "schema-version": "cytomine-0.1",
+    "description": "Neubias-WG5 workflow for SpotDetection using Icy",
+    "command-line": "python wrapper.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE ICY_SCALE3SENSITIVITY",
     "inputs": [
-           	{
-            "id": "cytomine_host", 
-            "value-key": "[@ID]",
-            "command-line-flag": "--@id", 
-            "name": "Cytomine host", 
-            "set-by-server": true,
-            "optional": false, 
-            "type": "String"
+        {
+            "id": "cytomine_host",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Cytomine host",
+            "description": "Cytomine server hostname",
+            "type": "String",
+            "optional": false,
+            "set-by-server": true
         },
         {
-            "id": "cytomine_public_key", 
-            "value-key": "[@ID]",
-            "command-line-flag": "--@id", 
-            "name": "Cytomine public key", 
-            "set-by-server": true,
-            "optional": false, 
-            "type": "String"
+            "id": "cytomine_public_key",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Cytomine public key",
+            "description": "Cytomine public key",
+            "type": "String",
+            "optional": false,
+            "set-by-server": true
         },
         {
-            "id": "cytomine_private_key", 
-            "value-key": "[@ID]",
-            "command-line-flag": "--@id", 
-            "name": "Cytomine public key", 
-            "set-by-server": true,
-            "optional": false, 
-            "type": "String"
+            "id": "cytomine_private_key",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Cytomine private key",
+            "description": "Cytomine private key",
+            "type": "String",
+            "optional": false,
+            "set-by-server": true
         },
         {
-            "id": "cytomine_id_project", 
-            "value-key": "[@ID]",
-            "command-line-flag": "--@id", 
-            "name": "Cytomine project ID", 
-            "set-by-server": true,
-            "optional": false, 
-            "type": "Number"
+            "id": "cytomine_id_project",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Cytomine project id",
+            "description": "Cytomine project id",
+            "type": "String",
+            "optional": false,
+            "set-by-server": true
         },
         {
-            "id": "cytomine_id_software", 
-            "value-key": "[@ID]",
-            "command-line-flag": "--@id", 
-            "name": "Cytomine software ID", 
-            "set-by-server": true,
-            "optional": false, 
-            "type": "Number"
+            "id": "cytomine_id_software",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Cytomine software id",
+            "description": "Cytomine software id",
+            "type": "String",
+            "optional": false,
+            "set-by-server": true
         },
         {
             "id": "icy_scale3sensitivity",
-            "value-key": "[@ID]",
-            "command-line-flag": "--@id", 
-            "name": "Scale sensitivity",
-            "description": "See Icy documentation",
+            "value-key": "@ID",
+            "command-line-flag": "--@id",
+            "name": "Scale 3 sensitivity",
+            "description": "Scale sensitivity",
+            "type": "Number",
             "default-value": 40,
-            "optional": true,
-            "set-by-server": false,
-            "type": "number",
-            "minimum": 1,
-            "maximum": 100
+            "optional": true
         }
-    ],
-    "schema-version": "cytomine-0.1"
+    ]
 }
