@@ -46,12 +46,12 @@ def main():
         cj.job.update(progress=1, statusComment="Downloading images (to {})...".format(in_dir))
         image_instances = ImageInstanceCollection().fetch_with_filter("project", cj.project.id)
 
-        for image in cj.monitor(image_instances, start=1, end=25, period=0.1, prefix="Download input images"):
+        for image in image_instances:
             image.download(os.path.join(in_dir, "{id}.tif"))
 
         # call the image analysis workflow in the docker image
         cj.job.update(progress=25, statusComment="Launching workflow...")
-        call("sh /icy/run.sh /icy/data/in {}".format(scale3sens), shell=True)  # waits for the subprocess to return
+        call("/bin/sh /icy/run.sh /icy/data/in {}".format(scale3sens), shell=True)  # waits for the subprocess to return
 
         # # remove existing annotations if any
         # for image in cj.monitor(image_instances, start=60, end=75, period=0.1, prefix="Delete previous annotations"):
