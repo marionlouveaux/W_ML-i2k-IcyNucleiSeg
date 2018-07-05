@@ -1,124 +1,86 @@
 import sys
 import os
-from cytomine import Cytomine
+from cytomine import CytomineJob
 from cytomine.models import *
 from subprocess import call
-from skimage import io
-import numpy as np
-from sldc import locator
 from shapely.geometry import Point
-from array import *
-from argparse import ArgumentParser
+
 
 def readcoords(fname):
-	X = []
-	Y = []
-	F = open(fname,'r')
-	i = 1
-	for index,l in enumerate(F.readlines()):
-                if index<2: continue
-		t = l.split('\t')
-                print t
-                if len(t)>1:
-		        X.append(float(t[5]))
-		        Y.append(float(t[6]))
-		i=i+1
-	F.close()
-	return X,Y
-
-baseOutputFolder = "/dockershare/";
-
-parser = ArgumentParser(prog="Icy-SpotDetection.py", description="Icy workflow to detect spots in 2D images")
-parser.add_argument('--cytomine_host', dest="cytomine_host", default='http://localhost-core')
-parser.add_argument('--cytomine_public_key', dest="cytomine_public_key", default="")
-parser.add_argument('--cytomine_private_key', dest="cytomine_private_key", default="")
-parser.add_argument("--cytomine_id_project", dest="cytomine_id_project", default="5378")
-parser.add_argument("--icy_scale3sensitivity", dest="scale3sens", default="40")
-
-arguments, others = parser.parse_known_args(sys.argv)
-scale3sens = arguments.scale3sens
+    X = []
+    Y = []
+    F = open(fname, 'r')
+    i = 1
+    for index, l in enumerate(F.readlines()):
+        if index < 2: continue
+        t = l.split('\t')
+        print()
+        if len(t) > 1:
+            X.append(float(t[5]))
+            Y.append(float(t[6]))
+        i = i + 1
+    F.close()
+    return X, Y
 
 
-#Cytomine connection parameters
-cytomine_host=arguments.cytomine_host
+def main():
+    base_output_folder = "/dockershare/"
 
-id_project=arguments.cytomine_id_project
+    with CytomineJob.from_cli(sys.argv[1:]) as cj:
+        scale3sens = cj.parameters.icy_scale3sensitivity
 
-conn = Cytomine(arguments.cytomine_host, arguments.cytomine_public_key, arguments.cytomine_private_key, base_path = '/api/', working_path = '/tmp/', verbose= True)
+        cj.job.update(progress=1, statusComment="Loading images from Cytomine...")
 
-current_user = conn.get_current_user()
-user_job = current_user
+        # create the folder structure for the folders shared with docker
+        job_folder = os.path.join(base_output_folder, str(cj.job.id))
+        in_dir = os.path.join(job_folder, "in")
+        out_dir = os.path.join(job_folder, "out")
 
-job = conn.get_job(user_job.job)
+        if not os.path.exists(in_dir):
+            os.makedirs(in_dir)
 
-job = conn.update_job_status(job, status = job.RUNNING, progress = 0, status_comment = "Loading images from Cytomine...")
+        if not os.path.exists(out_dir):
+            os.makedirs(out_dir)
 
-# Get the list of images in the project
-image_instances = ImageInstanceCollection()
-image_instances.project  =  id_project
-image_instances  =  conn.fetch(image_instances)
-images = image_instances.data()
+        # Get the list of images in the project
+        cj.job.update(progress=1, statusComment="Downloading images (to {})...".format(in_dir))
+        image_instances = ImageInstanceCollection().fetch_with_filter("project", cj.project.id)
 
-# create the folder structure for the folders shared with docker 
-jobFolder = baseOutputFolder + str(job.id) + "/"
-inDir = jobFolder + "in"
-outDir = jobFolder + "out"
+        for image in cj.monitor(image_instances, start=1, end=25, period=0.1, prefix="Download input images"):
+            image.download(os.path.join(in_dir, "{id}.tif"))
 
-if not os.path.exists(inDir):
-    os.makedirs(inDir)
+        # call the image analysis workflow in the docker image
+        cj.job.update(progress=25, statusComment="Launching workflow...")
+        call("sh run.sh data/in {}".format(scale3sens), shell=True)  # waits for the subprocess to return
 
-if not os.path.exists(outDir):
-    os.makedirs(outDir)
+        # # remove existing annotations if any
+        # for image in cj.monitor(image_instances, start=60, end=75, period=0.1, prefix="Delete previous annotations"):
+        #     annotations = AnnotationCollection.fetch_with_filter({"image": image.id})
+        #     for annotation in annotations:
+        #         conn.delete_annotation(annotation.id)
+        cj.job.update(progress=75, status_comment="Extracting polygons...")
 
-# download the images
-for image in images:
-	# url format: CYTOMINEURL/api/imageinstance/$idOfMyImageInstance/download
-	url = cytomine_host+"/api/imageinstance/" + str(image.id) + "/download"
-	filename = str(image.id) + ".tif"
-	conn.fetch_url_into_file(url, inDir+"/"+filename, True, True) 
+        for image in cj.monitor(image_instances, start=75, end=95, period=0.1, prefix="Upload annotations"):
+            file = str(image.id) + "_results.txt"
+            path = os.path.join(in_dir, file)
+            if os.path.isfile(path):
+                (X, Y) = readcoords(path)
+                for i in range(len(X)):
+                    center = Point(X[i], image.height - Y[i])
+                    annotation.location = center.wkt
+                    Annotation(location=center.wkt, id_image=image.id).save()
+            else:
+                print("No output file at '{}' for image with id:{}.".format(path, image.id), file=sys.stderr)
 
-# call the image analysis workflow in the docker image
-shArgs = "data/in "+scale3sens
-job = conn.update_job_status(job, status = job.RUNNING, progress = 25, status_comment = "Launching workflow...")
-command = "docker run --rm -v "+jobFolder+":/icy/data neubiaswg5/w_spotdetection-icy " + shArgs
-call(command,shell=True)	# waits for the subprocess to return
+        # should launch the metrics computation here
+        # TODO
 
-# remove existing annotations if any
-for image in images:
-	annotations = conn.get_annotations(id_image=image.id)
-        for annotation in annotations:
-            conn.delete_annotation(annotation.id)
+        # cleanup - remove the downloaded images and the images created by the workflow
+        cj.job.update(progress=99, prefix="Cleaning up...")
+        os.remove(job_folder)
 
-files = os.listdir(outDir)
-
-
-job = conn.update_job_status(job, status = job.RUNNING, progress = 50, status_comment = "Extracting polygons...")
-
-for image in images:
-	file = str(image.id) + "_results.txt"
-	path = inDir + "/" + file
-	if(os.path.isfile(path)):
-		(X,Y) = readcoords(path)
-	  	for i in range(len(X)):
-			circle = Point(X[i],image.height-Y[i])
-			annotation.location=circle.wkt
-			new_annotation = conn.add_annotation(annotation.location, image.id)
-	else:
-		print path + " does not exist"
+        cj.job.update(progress=100, status=Job.TERMINATED, status_comment="Finished Job..")
 
 
-#should launch the metrics computation here
-                
-# cleanup - remove the downloaded images and the images created by the workflow
-job = conn.update_job_status(job, status = job.TERMINATED, progress = 90, status_comment =  "Cleaning up..")
-
-for image in images:
-	file = str(image.id) + ".tif"
-	#path = outDir + "/" + file
-	#os.remove(path);
-	path = inDir + "/" + file
-	os.remove(path);
-        path = inDir + "/" + str(image.id) + "_results.txt"
-        os.remove(path)
-
-job = conn.update_job_status(job, status = job.TERMINATED, progress = 100, status_comment =  "Finished Job..")
+if __name__ == "__main__":
+    main()
