@@ -51,7 +51,7 @@ def main():
 
         # call the image analysis workflow in the docker image
         cj.job.update(progress=25, statusComment="Launching workflow...")
-        call("sh run.sh data/in {}".format(scale3sens), shell=True)  # waits for the subprocess to return
+        call("sh /icy/run.sh /icy/data/in {}".format(scale3sens), shell=True)  # waits for the subprocess to return
 
         # # remove existing annotations if any
         # for image in cj.monitor(image_instances, start=60, end=75, period=0.1, prefix="Delete previous annotations"):
@@ -76,8 +76,8 @@ def main():
         # TODO
 
         # cleanup - remove the downloaded images and the images created by the workflow
-        cj.job.update(progress=99, prefix="Cleaning up...")
-        os.remove(job_folder)
+        # cj.job.update(progress=99, prefix="Cleaning up...")
+        # os.rmdir(job_folder)
 
         cj.job.update(progress=100, status=Job.TERMINATED, status_comment="Finished Job..")
 
