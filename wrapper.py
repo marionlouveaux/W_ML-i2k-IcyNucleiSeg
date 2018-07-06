@@ -34,7 +34,7 @@ def main():
     with CytomineJob.from_cli(sys.argv[1:]) as cj:
         scale3sens = cj.parameters.icy_scale3sensitivity
 
-        working_path = os.path.join(base_path, str(cj.job.id))
+        working_path = os.path.join(base_path, "data", str(cj.job.id)) # OK as /app/data has chmod 777
         in_dir = os.path.join(working_path, "in")
         makedirs(in_dir)
         out_dir = os.path.join(working_path, "out")
