@@ -29,12 +29,12 @@ def readcoords(fname):
 
 
 def main():
-    base_path = "/app"
+    base_path = "{}/data".format(os.getenv("HOME")) # Mandatory for Singularity
 
     with CytomineJob.from_cli(sys.argv[1:]) as cj:
         scale3sens = cj.parameters.icy_scale3sensitivity
 
-        working_path = os.path.join(base_path, "data", str(cj.job.id)) # OK as /app/data has chmod 777
+        working_path = os.path.join(base_path, "data", str(cj.job.id))
         in_dir = os.path.join(working_path, "in")
         makedirs(in_dir)
         out_dir = os.path.join(working_path, "out")
@@ -47,9 +47,9 @@ def main():
             image.download(os.path.join(in_dir, "{id}.tif"))
 
         cj.job.update(progress=25, statusComment="Launching workflow...")
-        call("/bin/sh java -cp /icy/lib/ -jar /icy/icy.jar -hl", shell=True)
-        call("/bin/sh java -cp /icy/lib/ -jar /icy/icy.jar -hl -x plugins.adufour.protocols.Protocols "
-             "protocol=\"/app/protocol.protocol\" inputFolder=\"{}\" extension=tif csvFileSuffix=_results "
+        call("java -cp /icy/lib/ -jar /icy/icy.jar -hl", shell=True)
+        call("cd /icy && java -cp /icy/lib/ -jar /icy/icy.jar -hl -x plugins.adufour.protocols.Protocols "
+             "protocol=\"/icy/protocols/protocol.protocol\" inputFolder=\"{}\" extension=tif csvFileSuffix=_results "
              "scale3enable=true scale3sensitivity={}".format(in_dir, scale3sens), shell=True)
 
         # # remove existing annotations if any
