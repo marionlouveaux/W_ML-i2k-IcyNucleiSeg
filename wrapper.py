@@ -6,6 +6,11 @@ from subprocess import call
 from shapely.geometry import Point
 
 
+def makedirs(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+
 def readcoords(fname):
     X = []
     Y = []
@@ -24,42 +29,37 @@ def readcoords(fname):
 
 
 def main():
-    base_output_folder = "/dockershare/"
+    base_path = "/app"
 
     with CytomineJob.from_cli(sys.argv[1:]) as cj:
         scale3sens = cj.parameters.icy_scale3sensitivity
 
-        cj.job.update(progress=1, statusComment="Loading images from Cytomine...")
+        working_path = os.path.join(base_path, str(cj.job.id))
+        in_dir = os.path.join(working_path, "in")
+        makedirs(in_dir)
+        out_dir = os.path.join(working_path, "out")
+        makedirs(out_dir)
 
-        # create the folder structure for the folders shared with docker
-        job_folder = os.path.join(base_output_folder, str(cj.job.id))
-        in_dir = os.path.join(job_folder, "in")
-        out_dir = os.path.join(job_folder, "out")
-
-        if not os.path.exists(in_dir):
-            os.makedirs(in_dir)
-
-        if not os.path.exists(out_dir):
-            os.makedirs(out_dir)
-
-        # Get the list of images in the project
         cj.job.update(progress=1, statusComment="Downloading images (to {})...".format(in_dir))
         image_instances = ImageInstanceCollection().fetch_with_filter("project", cj.project.id)
 
         for image in image_instances:
             image.download(os.path.join(in_dir, "{id}.tif"))
 
-        # call the image analysis workflow in the docker image
         cj.job.update(progress=25, statusComment="Launching workflow...")
-        call("/bin/sh /icy/run.sh /icy/data/in {}".format(scale3sens), shell=True)  # waits for the subprocess to return
+        call("/bin/sh java -cp /icy/lib/ -jar /icy/icy.jar -hl", shell=True)
+        call("/bin/sh java -cp /icy/lib/ -jar /icy/icy.jar -hl -x plugins.adufour.protocols.Protocols "
+             "protocol=\"/app/protocol.protocol\" inputFolder=\"{}\" extension=tif csvFileSuffix=_results "
+             "scale3enable=true scale3sensitivity={}".format(in_dir, scale3sens), shell=True)
 
         # # remove existing annotations if any
         # for image in cj.monitor(image_instances, start=60, end=75, period=0.1, prefix="Delete previous annotations"):
         #     annotations = AnnotationCollection.fetch_with_filter({"image": image.id})
         #     for annotation in annotations:
-        #         conn.delete_annotation(annotation.id)
-        cj.job.update(progress=75, status_comment="Extracting polygons...")
+        #         annotation.delete()
 
+        cj.job.update(progress=75, status_comment="Extracting polygons...")
+        annotations = AnnotationCollection()
         for image in cj.monitor(image_instances, start=75, end=95, period=0.1, prefix="Upload annotations"):
             file = str(image.id) + "_results.txt"
             path = os.path.join(in_dir, file)
@@ -67,19 +67,21 @@ def main():
                 (X, Y) = readcoords(path)
                 for i in range(len(X)):
                     center = Point(X[i], image.height - Y[i])
-                    annotation.location = center.wkt
-                    Annotation(location=center.wkt, id_image=image.id).save()
+                    annotations.append(Annotation(location=center.wkt, id_image=image.id,
+                                                  id_project=cj.parameters.cytomine_id_project))
+
+                    if len(annotations) % 100 == 0:
+                        annotations.save()
+                        annotations = AnnotationCollection()
             else:
                 print("No output file at '{}' for image with id:{}.".format(path, image.id), file=sys.stderr)
+        # Save last annotations
+        annotations.save()
 
-        # should launch the metrics computation here
+        # Launch the metrics computation here
         # TODO
 
-        # cleanup - remove the downloaded images and the images created by the workflow
-        # cj.job.update(progress=99, prefix="Cleaning up...")
-        # os.rmdir(job_folder)
-
-        cj.job.update(progress=100, status=Job.TERMINATED, status_comment="Finished Job..")
+        cj.job.update(progress=100, status=Job.TERMINATED, status_comment="Finished.")
 
 
 if __name__ == "__main__":

@@ -1,11 +1,8 @@
 FROM neubiaswg5/icy-base:latest
 
-ADD protocol.protocol /icy/protocols/protocol.protocol
-ADD wrapper.py /icy/wrapper.py
-ADD run.sh /icy/run.sh
+RUN mkdir -p /app/data && chmod -R 777 /app/data
 
-RUN chmod -R 777 /icy/data
-RUN chmod a+x /icy/wrapper.py
-RUN chmod a+x /icy/run.sh
+ADD protocol.protocol /app/protocol.protocol
+ADD wrapper.py /app/wrapper.py
 
-ENTRYPOINT ["python", "/icy/wrapper.py"]
+ENTRYPOINT ["python", "/app/wrapper.py"]

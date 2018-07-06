@@ -1,7 +1,7 @@
 {
     "name": "SpotDetection-Icy",
     "container-image": {
-        "image": "rmormont/w_spotdetection_icy",
+        "image": "urubens/w_spotdetection_icy",
         "type": "singularity"
     },
     "schema-version": "cytomine-0.1",
