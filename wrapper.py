@@ -29,7 +29,7 @@ def readcoords(fname):
 
 
 def main():
-    base_path = "{}/data".format(os.getenv("HOME")) # Mandatory for Singularity
+    base_path = "{}".format(os.getenv("HOME")) # Mandatory for Singularity
 
     with CytomineJob.from_cli(sys.argv[1:]) as cj:
         scale3sens = cj.parameters.icy_scale3sensitivity
