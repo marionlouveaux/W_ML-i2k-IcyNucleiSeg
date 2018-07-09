@@ -1,7 +1,7 @@
 {
     "name": "SpotDetection-Icy",
     "container-image": {
-        "image": "urubens/w_spotdetection-icy",
+        "image": "neubiaswg5/w_spotdetection-icy",
         "type": "singularity"
     },
     "schema-version": "cytomine-0.1",
