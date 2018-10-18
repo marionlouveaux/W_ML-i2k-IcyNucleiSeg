@@ -19,20 +19,12 @@ def makedirs(path):
         os.makedirs(path)
 
 
-def readcoords(fname):
-    X = []
-    Y = []
-    F = open(fname, 'r')
-    i = 1
-    for index, l in enumerate(F.readlines()):
-        if index < 2: continue
-        t = l.split('\t')
-        if len(t) > 1:
-            X.append(float(t[5]))
-            Y.append(float(t[6]))
-        i = i + 1
-    F.close()
-    return X, Y
+def clean_icy_result_file(filepath, n=1):
+    lines = None
+    with open(filepath, "r") as file:
+        lines = file.readlines()
+    with open(filepath, "w") as file:
+        file.writelines([l for l in lines[n:] if len(l.strip()) > 0])
 
 
 def main():
@@ -95,12 +87,11 @@ def main():
                 continue
 
             # export points to AnnotationSlice
-            # points = csv_to_points(
-            #     path, has_headers=True,
-            #     parse_fn=lambda l, sep: [float(coord) for coord in l.split(sep)[5:7]]
-            # )
-            xs, ys = readcoords(path)
-            points = [AnnotationSlice(Point(x, y), label=None) for x, y in zip(xs, ys)]
+            clean_icy_result_file(path, n=1)  # among others, remove invalid header '== ROI Statistics ==' in result file
+            points = csv_to_points(
+                path, has_headers=True,
+                parse_fn=lambda l, sep: [float(coord) for coord in l.split(sep)[5:7]]
+            )
 
             annotations = AnnotationCollection()
             for _slice in points:
