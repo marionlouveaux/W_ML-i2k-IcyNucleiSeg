@@ -23,16 +23,15 @@ def clean_icy_result_file(filepath, n=1):
 
 def main():
     with NeubiasJob.from_cli(sys.argv[1:]) as nj:
-
-        problem_cls = CLASS_OBJDET
-
-        scale3sens = nj.parameters.icy_scale3sensitivity
-
         nj.job.update(status=Job.RUNNING, progress=0, statusComment="Initialisation...")
 
         # 1. Create working directories on the machine:
+        # 2. Download (or read) data
+        problem_cls = CLASS_OBJDET
         in_images, gt_images, in_path, gt_path, out_path, tmp_path = prepare_data(problem_cls, nj, is_2d=True, **nj.flags)
 
+        # 3. Execute workflow
+        scale3sens = nj.parameters.icy_scale3sensitivity
         nj.job.update(progress=25, statusComment="Launching workflow...")
         call("java -cp /icy/lib/ -jar /icy/icy.jar -hl", shell=True, cwd="/icy")
         call("java -cp /icy/lib/ -jar /icy/icy.jar -hl -x plugins.adufour.protocols.Protocols "
@@ -46,8 +45,6 @@ def main():
             filename = image if isinstance(image, str) else image.filename
             clean_icy_result_file(filename, n=1)
             shutil.move(filename, os.path.join(out_path, os.path.basename(filename)))
-
-        nj.job.update(progress=75, status_comment="Extracting polygons...")
 
         # 4. Upload the annotation and labels to Cytomine
         upload_data(
