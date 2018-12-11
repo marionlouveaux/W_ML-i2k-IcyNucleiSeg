@@ -4,7 +4,7 @@ import sys
 from cytomine.models import *
 from subprocess import call
 
-from neubiaswg5 import CLASS_OBJDET
+from neubiaswg5 import CLASS_SPTCNT
 from neubiaswg5.helpers import prepare_data, NeubiasJob, upload_data, upload_metrics
 
 
@@ -27,7 +27,7 @@ def main():
 
         # 1. Create working directories on the machine:
         # 2. Download (or read) data
-        problem_cls = CLASS_OBJDET
+        problem_cls = CLASS_SPTCNT
         in_images, gt_images, in_path, gt_path, out_path, tmp_path = prepare_data(problem_cls, nj, is_2d=True, **nj.flags)
 
         # 3. Execute workflow
@@ -41,16 +41,21 @@ def main():
         # Generated csv files must be cleaned: remove invalid header '== ROI Statistics ==' in result file (i.e.
         # remove one line). Also, move CSV file to output folder.
         # If --nodownload is set, image is a filepath. Otherwise, it is an ImageInstance.
+        csv_suffix = "_results.txt"
         for image in in_images:
-            filename = image if isinstance(image, str) else image.filename
+            if isinstance(image, str):
+                filename = os.path.join(in_path, os.path.basename(image).rsplit(".", 1)[0])
+            else:
+                filename = os.path.join(in_path, str(image.id))
+            filename += csv_suffix
             clean_icy_result_file(filename, n=1)
             shutil.move(filename, os.path.join(out_path, os.path.basename(filename)))
 
         # 4. Upload the annotation and labels to Cytomine
         upload_data(
             problem_cls, nj, in_images, out_path,
-            is_csv=True, generate_mask=True,
-            result_file_suffix="_results.txt",
+            is_csv=True, result_file_suffix=csv_suffix,
+            generate_mask=True, in_path=in_path,
             has_headers=True,
             parse_fn=lambda l, sep: [float(coord) for coord in l.split(sep)[5:7]],
             **nj.flags, monitor_params={
