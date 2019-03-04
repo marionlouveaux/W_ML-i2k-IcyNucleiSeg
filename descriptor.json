@@ -65,7 +65,7 @@
             "name": "Scale 3 sensitivity",
             "description": "Scale sensitivity",
             "type": "Number",
-            "default-value": 40,
+            "default-value": 100,
             "optional": true
         }
     ]
