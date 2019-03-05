@@ -87,7 +87,7 @@
 <variable ID="ROIs for detection mask" name="ROIs for detection mask" runtime="false" value="" visible="true"/>
 <variable ID="Scale 1" name="Scale 1" runtime="false" value="false" visible="true"/>
 <variable ID="Scale 2" name="Scale 2" runtime="false" visible="true"/>
-<variable ID="Scale 3" name="Scale 3" runtime="false" visible="true"/>
+<variable ID="Scale 3" name="Scale 3" runtime="false" value="false" visible="true"/>
 <variable ID="Scale 4" name="Scale 4" runtime="false" value="false" visible="true"/>
 <variable ID="Scale 5" name="Scale 5" runtime="false" value="false" visible="true"/>
 <variable ID="Th. scale 1:" name="Th. scale 1:" runtime="false" value="100" visible="false"/>
