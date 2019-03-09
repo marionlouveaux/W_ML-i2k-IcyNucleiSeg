@@ -92,7 +92,7 @@
 <variable ID="Scale 5" name="Scale 5" runtime="false" value="false" visible="true"/>
 <variable ID="Th. scale 1:" name="Th. scale 1:" runtime="false" value="100" visible="false"/>
 <variable ID="Th. scale 2:" name="Th. scale 2:" runtime="false" visible="false"/>
-<variable ID="Th. scale 3:" name="Th. scale 3:" runtime="false" visible="false"/>
+<variable ID="Th. scale 3:" name="Th. scale 3:" runtime="false" value="100" visible="false"/>
 <variable ID="Th. scale 4:" name="Th. scale 4:" runtime="false" value="100" visible="false"/>
 <variable ID="Th. scale 5:" name="Th. scale 5:" runtime="false" value="100" visible="false"/>
 <variable ID="Force 2D Wavelets" name="Force 2D Wavelets" runtime="false" visible="true"/>
