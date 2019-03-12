@@ -26,6 +26,7 @@ ENV PATH $PATH:/icy
 RUN mkdir -p /icy/data/in && \
         mkdir -p /icy/protocols
 
+RUN chmod -R a+rwx /icy 
 # ---------------------------------------------------------------------------------------------------------------------
 # Install Neubias-W5-Utilities (annotation exporter, compute metrics, helpers,...)
 RUN git clone https://github.com/Neubias-WG5/neubiaswg5-utilities.git && \
