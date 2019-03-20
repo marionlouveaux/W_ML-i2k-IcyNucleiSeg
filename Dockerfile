@@ -14,12 +14,11 @@ RUN rm -r /Cytomine-python-client
 # ---------------------------------------------------------------------------------------------------------------------
 # Install Icy.
 RUN apt-get update && apt-get install -y unzip wget && \
-    mkdir -p /icy 
-
-COPY icy_1.9.9.1_with_plugins.zip /icy/icy.zip
-
-RUN cd /icy && unzip icy.zip && \
-	rm -rf icy.zip
+    mkdir -p /icy && \
+    cd /icy && \
+    wget -O icy.zip https://github.com/Neubias-WG5/W_SpotDetection-Icy/raw/master/icy_1.9.9.1_with_plugins.zip && \
+    unzip icy.zip && \
+    rm -rf icy.zip
 
 # Add icy to the PATH
 ENV PATH $PATH:/icy
