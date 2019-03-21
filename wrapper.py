@@ -5,7 +5,8 @@ from subprocess import call
 from pathlib import Path
 
 from neubiaswg5 import CLASS_SPTCNT
-from neubiaswg5.helpers import prepare_data, NeubiasJob, upload_data, upload_metrics
+from neubiaswg5.helpers import prepare_data, NeubiasJob, upload_data, upload_metrics, get_discipline
+
 
 def makedirs(path):
     if not os.path.exists(path):
@@ -26,9 +27,9 @@ def main():
 
         # 1. Create working directories on the machine:
         # 2. Download (or read) data
-        problem_cls = CLASS_SPTCNT
+        problem_cls = get_discipline(nj, default=CLASS_SPTCNT)
         is_2d = True
-        in_images, gt_images, in_path, gt_path, out_path, tmp_path = prepare_data(problem_cls, nj, is_2d=True, **nj.flags)
+        in_images, gt_images, in_path, gt_path, out_path, tmp_path = prepare_data(problem_cls, nj, is_2d=is_2d, **nj.flags)
 
         # 3. Execute workflow
         scale3sens = nj.parameters.icy_scale3sensitivity
