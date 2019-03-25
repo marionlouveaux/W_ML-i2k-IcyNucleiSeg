@@ -23,12 +23,13 @@ def clean_icy_result_file(filepath, n=1):
 
 def main():
     with NeubiasJob.from_cli(sys.argv[1:]) as nj:
-        nj.job.update(status=Job.RUNNING, progress=0, statusComment="Initialisation...")
+        nj.job.update(status=Job.RUNNING, progress=0, statusComment="Initialization...")
 
         # 1. Create working directories on the machine:
         # 2. Download (or read) data
         problem_cls = get_discipline(nj, default=CLASS_SPTCNT)
         is_2d = True
+        nj.job.update(progress=1, statusComment="Execute workflow on problem class '{}'".format(problem_cls))
         in_images, gt_images, in_path, gt_path, out_path, tmp_path = prepare_data(problem_cls, nj, is_2d=is_2d, **nj.flags)
 
         # 3. Execute workflow
