@@ -30,7 +30,7 @@ RUN chmod -R a+rwx /icy
 # ---------------------------------------------------------------------------------------------------------------------
 # Install Neubias-W5-Utilities (annotation exporter, compute metrics, helpers,...)
 RUN git clone https://github.com/Neubias-WG5/neubiaswg5-utilities.git && \
-       cd /neubiaswg5-utilities/ && git checkout tags/v0.6.0 && pip install .
+       cd /neubiaswg5-utilities/ && git checkout tags/v0.6.8 && pip install .
 
 # install utilities binaries
 RUN chmod +x /neubiaswg5-utilities/bin/*
