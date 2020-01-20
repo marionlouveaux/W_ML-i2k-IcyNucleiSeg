@@ -12,15 +12,11 @@ RUN cd /Cytomine-python-client && git checkout tags/v2.3.0.poc.1 && pip install 
 RUN rm -r /Cytomine-python-client
 
 # ---------------------------------------------------------------------------------------------------------------------
-# Install gdown
-RUN pip install gdown
-
-# ---------------------------------------------------------------------------------------------------------------------
 # Install Icy.
 RUN apt-get update && apt-get install -y unzip wget && \
     mkdir -p /icy && \
     cd /icy && \
-    gdown -O icy.zip https://doc-10-64-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/u7qcal96olch1m3tac666lr8q3bnc4co/1579248000000/06618377988378538221/*/1vgJK6ZIt-kTfBhZOBtyRIRLUdRJM-e6f?e=download && \
+    wget -O icy.zip https://zenodo.org/record/3562103/files/icy_1.9.9.1_with_plugins.zip?download=1 && \
     unzip icy.zip && \
     rm -rf icy.zip
 
