@@ -6,7 +6,7 @@
     },
     "schema-version": "cytomine-0.1",
     "description": "I2K tutorial - Test workflow to segment nuclei",
-    "command-line": "python wrapper.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE ICY_SCALE3SENSITIVITY",
+    "command-line": "python wrapper.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE RADIUS",
     "inputs": [
         {
             "id": "cytomine_host",

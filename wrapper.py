@@ -33,12 +33,11 @@ def main():
         in_images, gt_images, in_path, gt_path, out_path, tmp_path = prepare_data(problem_cls, nj, is_2d=is_2d, **nj.flags)
 
         # 3. Execute workflow
-        scale3sens = nj.parameters.icy_scale3sensitivity
+        gaussradius = nj.parameters.radius
         nj.job.update(progress=25, statusComment="Launching workflow...")
         call("java -cp /icy/lib/ -jar /icy/icy.jar -hl", shell=True, cwd="/icy")
         call("java -cp /icy/lib/ -jar /icy/icy.jar -hl -x plugins.adufour.protocols.Protocols "
-             "protocol=\"/icy/protocols/protocol.protocol\" inputFolder=\"{}\" outputFolder=\"{}\" extension=tif "
-             "scale2enable=true scale2sensitivity={}".format(in_path, out_path, scale3sens), shell=True, cwd="/icy")
+             "protocol=\"/icy/protocols/protocol.protocol\" inputFolder=\"{}\" outputFolder=\"{}\" extension=tif radius=\"{}\"".format(in_path, out_path, gaussradius), shell=True, cwd="/icy")
 
         # 3.5 Remove the xml-output files
         for p in Path(out_path).glob("*.xml"):
