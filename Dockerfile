@@ -46,7 +46,7 @@ RUN pip install imagecodecs-lite==2019.2.22
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Install Protocol
-ADD protocol.protocol /icy/protocols/protocol.protocol
+ADD Icy_protocol.protocol /icy/protocols/Icy_protocol.protocol
 ADD wrapper.py /app/wrapper.py
 
 # for running the wrapper locally
