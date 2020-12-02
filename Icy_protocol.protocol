@@ -1,0 +1,212 @@
+<protocol VERSION="4">
+<blocks>
+<block CommandLineID="" ID="2105713055" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Input folder" height="61" keepsResults="true" width="169" xLocation="234" yLocation="19">
+<variables>
+<input>
+<variable ID="folder" name="folder" runtime="false" value="C:\Users\Marion\Documents\Admin\Conférences\I2K\Biaflows" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="" ID="1976271295" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Output folder" height="61" keepsResults="true" width="179" xLocation="247" yLocation="305">
+<variables>
+<input>
+<variable ID="folder" name="folder" runtime="false" value="C:\Users\Marion\Documents\Admin\Conférences\I2K\Biaflows" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="" ID="1439396112" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="radius" height="64" keepsResults="true" width="137" xLocation="287" yLocation="107">
+<variables>
+<input>
+<variable ID="decimal" name="decimal" runtime="false" value="3.0" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="" ID="1526619258" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="minsize" height="64" keepsResults="true" width="145" xLocation="183" yLocation="166">
+<variables>
+<input>
+<variable ID="decimal" name="decimal" runtime="false" value="200.0" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<workflow ID="239936278" blockType="plugins.adufour.blocks.lang.FileBatch" className="plugins.adufour.blocks.lang.FileBatch" collapsed="false" definedName="File batch" height="615" keepsResults="true" width="1529" xLocation="544" yLocation="19">
+<blocks>
+<block ID="1174766271" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="true" definedName="File to sequence" height="108" keepsResults="true" width="190" xLocation="247" yLocation="134">
+<variables>
+<input>
+<variable ID="input file" name="input file" runtime="false" visible="true"/>
+<variable ID="Series" name="Series" runtime="false" value="0" visible="true"/>
+</input>
+<output>
+<variable ID="sequence" name="sequence" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="2004480613" blockType="plugins.adufour.hierarchicalkmeans.HierarchicalKMeans" className="plugins.adufour.hierarchicalkmeans.HierarchicalKMeans" collapsed="false" definedName="HK-Means" height="255" keepsResults="true" width="300" xLocation="518" yLocation="10">
+<variables>
+<input>
+<variable ID="Input" name="Input" runtime="false" visible="true"/>
+<variable ID="Gaussian pre-filter" name="Gaussian pre-filter" runtime="false" visible="true"/>
+<variable ID="Frame" name="Frame" runtime="false" value="0" visible="true"/>
+<variable ID="Number of classes" name="Intensity classes" runtime="false" value="10" visible="true"/>
+<variable ID="Min size (px)" name="Min object size (px)" runtime="false" visible="true"/>
+<variable ID="Max size (px)" name="Max object size (px)" runtime="false" value="1000" visible="true"/>
+<variable ID="Final threshold" name="Min object intensity" runtime="false" value="100.0" visible="true"/>
+</input>
+<output>
+<variable ID="binary sequence" name="binary sequence" runtime="false" visible="true"/>
+<variable ID="output regions" name="list of ROI" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1059217403" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="Display" height="284" keepsResults="true" width="311" xLocation="1024" yLocation="13">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="19662003" blockType="plugins.tprovoost.sequenceblocks.infos.GetName" className="plugins.tprovoost.sequenceblocks.SequenceBlocks" collapsed="false" definedName="Get name" height="83" keepsResults="true" width="246" xLocation="23" yLocation="247">
+<variables>
+<input>
+<variable ID="sequence" name="Sequence" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="name" name="Name" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="545058519" blockType="plugins.adufour.blocks.tools.text.AppendText" className="plugins.adufour.blocks.Blocks" collapsed="false" definedName="Append text" height="130" keepsResults="true" width="170" xLocation="66" yLocation="369">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" value="" visible="true"/>
+<variable ID="Separator" name="Separator" runtime="false" value="\" visible="true"/>
+<variable ID="Suffix" name="Suffix" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block CommandLineID="" ID="817999756" blockType="plugins.adufour.blocks.tools.input.Text" className="plugins.adufour.blocks.tools.input.Text" collapsed="false" definedName="Text" height="64" keepsResults="true" width="127" xLocation="108" yLocation="504">
+<variables>
+<input>
+<variable ID="text" name="text" runtime="false" value="" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="635999127" blockType="plugins.adufour.blocks.tools.text.AppendText" className="plugins.adufour.blocks.Blocks" collapsed="false" definedName="Append text" height="130" keepsResults="true" width="170" xLocation="275" yLocation="426">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="Separator" name="Separator" runtime="false" value="_results" visible="true"/>
+<variable ID="Suffix" name="Suffix" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="694323881" blockType="plugins.adufour.blocks.tools.io.AppendFilePath" className="plugins.adufour.blocks.tools.io.AppendFilePath" collapsed="false" definedName="Append file path" height="132" keepsResults="true" width="195" xLocation="605" yLocation="283">
+<variables>
+<input>
+<variable ID="input file" name="Current file" runtime="false" type="java.io.File" visible="true"/>
+<variable ID="remove ext." name="Remove extension" runtime="false" value="false" visible="true"/>
+<variable ID="suffix" name="Add suffix" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output file" name="New file" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="675892465" blockType="plugins.tprovoost.sequenceblocks.files.SaveSequence" className="plugins.tprovoost.sequenceblocks.SequenceBlocks" collapsed="false" definedName="Save sequence" height="153" keepsResults="true" width="258" xLocation="866" yLocation="347">
+<variables>
+<input>
+<variable ID="file" name="File" runtime="false" type="java.io.File" visible="true"/>
+<variable ID="sequence" name="Sequence" runtime="false" visible="true"/>
+<variable ID="format" name="Format" runtime="false" value="TIFF" visible="true"/>
+<variable ID="overwrite" name="Overwrite" runtime="false" value="true" visible="true"/>
+<variable ID="multiple file" name="Multiple file" runtime="false" value="false" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="1174766271" dstVarID="input file" srcBlockID="239936278" srcVarID="file"/>
+<link dstBlockID="19662003" dstVarID="sequence" srcBlockID="1174766271" srcVarID="sequence"/>
+<link dstBlockID="2004480613" dstVarID="Input" srcBlockID="1174766271" srcVarID="sequence"/>
+<link dstBlockID="1059217403" dstVarID="object" srcBlockID="2004480613" srcVarID="binary sequence"/>
+<link dstBlockID="675892465" dstVarID="sequence" srcBlockID="2004480613" srcVarID="binary sequence"/>
+<link dstBlockID="545058519" dstVarID="Suffix" srcBlockID="19662003" srcVarID="name"/>
+<link dstBlockID="635999127" dstVarID="input" srcBlockID="545058519" srcVarID="output"/>
+<link dstBlockID="635999127" dstVarID="Suffix" srcBlockID="817999756" srcVarID="text"/>
+<link dstBlockID="694323881" dstVarID="suffix" srcBlockID="635999127" srcVarID="output"/>
+<link dstBlockID="675892465" dstVarID="file" srcBlockID="694323881" srcVarID="output file"/>
+</links>
+<variables>
+<input>
+<variable ID="folder" blockID="239936278" value="" visible="true"/>
+<variable ID="extension" blockID="239936278" value="tif" visible="true"/>
+<variable ID="Include sub-folders" blockID="239936278" value="true" visible="true"/>
+<variable ID="1174766271:input file" blockID="1174766271" value="" visible="false"/>
+<variable ID="1174766271:Series" blockID="1174766271" value="0" visible="false"/>
+<variable ID="2004480613:Input" blockID="2004480613" value="No Sequence" visible="false"/>
+<variable ID="2004480613:Gaussian pre-filter" blockID="2004480613" value="3.0" visible="true"/>
+<variable ID="2004480613:Frame" blockID="2004480613" value="0" visible="false"/>
+<variable ID="2004480613:Number of classes" blockID="2004480613" value="10" visible="false"/>
+<variable ID="2004480613:Min size (px)" blockID="2004480613" value="200" visible="true"/>
+<variable ID="2004480613:Max size (px)" blockID="2004480613" value="1000" visible="false"/>
+<variable ID="2004480613:Final threshold" blockID="2004480613" value="100.0" visible="false"/>
+<variable ID="1059217403:object" blockID="1059217403" value="" visible="false"/>
+<variable ID="19662003:sequence" blockID="19662003" value="No Sequence" visible="false"/>
+<variable ID="545058519:input" blockID="545058519" value="" visible="false"/>
+<variable ID="545058519:Separator" blockID="545058519" value="\" visible="false"/>
+<variable ID="545058519:Suffix" blockID="545058519" value="" visible="false"/>
+<variable ID="817999756:text" blockID="817999756" value="" visible="false"/>
+<variable ID="635999127:input" blockID="635999127" value="" visible="false"/>
+<variable ID="635999127:Separator" blockID="635999127" value="_results" visible="false"/>
+<variable ID="635999127:Suffix" blockID="635999127" value="" visible="false"/>
+<variable ID="694323881:input file" blockID="694323881" value="" visible="true"/>
+<variable ID="694323881:remove ext." blockID="694323881" value="false" visible="false"/>
+<variable ID="694323881:suffix" blockID="694323881" value="" visible="false"/>
+<variable ID="675892465:file" blockID="675892465" value="" visible="false"/>
+<variable ID="675892465:sequence" blockID="675892465" value="No Sequence" visible="false"/>
+<variable ID="675892465:format" blockID="675892465" value="TIFF" visible="false"/>
+<variable ID="675892465:overwrite" blockID="675892465" value="true" visible="false"/>
+<variable ID="675892465:multiple file" blockID="675892465" value="false" visible="false"/>
+</input>
+<output>
+<variable ID="iteration" blockID="239936278" visible="true"/>
+<variable ID="file" blockID="239936278" visible="true"/>
+<variable ID="1174766271:sequence" blockID="1174766271" visible="false"/>
+<variable ID="2004480613:binary sequence" blockID="2004480613" visible="false"/>
+<variable ID="2004480613:output regions" blockID="2004480613" visible="false"/>
+<variable ID="19662003:name" blockID="19662003" visible="false"/>
+<variable ID="545058519:output" blockID="545058519" visible="false"/>
+<variable ID="635999127:output" blockID="635999127" visible="false"/>
+<variable ID="694323881:output file" blockID="694323881" visible="false"/>
+</output>
+</variables>
+</workflow>
+<block CommandLineID="" ID="1585687346" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="maxsize" height="64" keepsResults="true" width="148" xLocation="250" yLocation="234">
+<variables>
+<input>
+<variable ID="decimal" name="decimal" runtime="false" value="1000.0" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="239936278" dstVarID="694323881:input file" srcBlockID="1976271295" srcVarID="folder"/>
+<link dstBlockID="239936278" dstVarID="folder" srcBlockID="2105713055" srcVarID="folder"/>
+<link dstBlockID="239936278" dstVarID="2004480613:Gaussian pre-filter" srcBlockID="1439396112" srcVarID="decimal"/>
+<link dstBlockID="239936278" dstVarID="2004480613:Min size (px)" srcBlockID="1526619258" srcVarID="decimal"/>
+</links>
+</protocol>
