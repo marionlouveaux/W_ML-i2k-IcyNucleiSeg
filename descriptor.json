@@ -1,11 +1,11 @@
 {
-    "name": "SpotDetection-Icy",
+    "name": "W_ML-i2k-IcyNucleiSeg",
     "container-image": {
-        "image": "neubiaswg5/w_spotdetection-icy",
+        "image": "marionlouveaux/w_ml-i2k-icynucleiseg",
         "type": "singularity"
     },
     "schema-version": "cytomine-0.1",
-    "description": "Neubias-WG5 workflow for SpotDetection using Icy",
+    "description": "I2K tutorial - Test workflow to segment nuclei",
     "command-line": "python wrapper.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE ICY_SCALE3SENSITIVITY",
     "inputs": [
         {
@@ -59,13 +59,13 @@
             "set-by-server": true
         },
         {
-            "id": "icy_scale3sensitivity",
+            "id": "radius",
             "value-key": "@ID",
             "command-line-flag": "--@id",
-            "name": "Scale 3 sensitivity",
-            "description": "Scale sensitivity",
+            "name": "radius",
+            "description": "Gaussian blur radius",
             "type": "Number",
-            "default-value": 100,
+            "default-value": 3,
             "optional": true
         }
     ]
