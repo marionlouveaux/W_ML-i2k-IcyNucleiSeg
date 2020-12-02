@@ -37,7 +37,7 @@ def main():
         nj.job.update(progress=25, statusComment="Launching workflow...")
         call("java -cp /icy/lib/ -jar /icy/icy.jar -hl", shell=True, cwd="/icy")
         call("java -cp /icy/lib/ -jar /icy/icy.jar -hl -x plugins.adufour.protocols.Protocols "
-             "protocol=\"/icy/protocols/protocol.protocol\" inputFolder=\"{}\" outputFolder=\"{}\" extension=tif radius=\"{}\"".format(in_path, out_path, gaussradius), shell=True, cwd="/icy")
+             "protocol=\"/icy/protocols/Icy_protocol.protocol\" inputFolder=\"{}\" outputFolder=\"{}\" extension=tif radius=\"{}\"".format(in_path, out_path, gaussradius), shell=True, cwd="/icy")
 
         # 3.5 Remove the xml-output files
         for p in Path(out_path).glob("*.xml"):
