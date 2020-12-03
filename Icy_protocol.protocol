@@ -16,7 +16,7 @@
 <output/>
 </variables>
 </block>
-<block CommandLineID="" ID="1439396112" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="radius" height="64" keepsResults="true" width="137" xLocation="287" yLocation="107">
+<block CommandLineID="" ID="1439396112" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Gaussian blur radius" height="64" keepsResults="true" width="217" xLocation="208" yLocation="91">
 <variables>
 <input>
 <variable ID="decimal" name="decimal" runtime="false" value="3.0" visible="true"/>
@@ -204,8 +204,8 @@
 </block>
 </blocks>
 <links>
-<link dstBlockID="239936278" dstVarID="694323881:input file" srcBlockID="1976271295" srcVarID="folder"/>
 <link dstBlockID="239936278" dstVarID="folder" srcBlockID="2105713055" srcVarID="folder"/>
+<link dstBlockID="239936278" dstVarID="694323881:input file" srcBlockID="1976271295" srcVarID="folder"/>
 <link dstBlockID="239936278" dstVarID="2004480613:Gaussian pre-filter" srcBlockID="1439396112" srcVarID="decimal"/>
 <link dstBlockID="239936278" dstVarID="2004480613:Min size (px)" srcBlockID="1526619258" srcVarID="decimal"/>
 </links>
