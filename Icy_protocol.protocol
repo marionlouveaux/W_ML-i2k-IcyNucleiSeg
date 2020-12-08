@@ -1,6 +1,6 @@
 <protocol VERSION="4">
 <blocks>
-<block CommandLineID="" ID="2105713055" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Input folder" height="61" keepsResults="true" width="169" xLocation="234" yLocation="19">
+<block CommandLineID="inputFolder" ID="2105713055" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Input folder" height="61" keepsResults="true" width="169" xLocation="234" yLocation="19">
 <variables>
 <input>
 <variable ID="folder" name="folder" runtime="false" value="C:\Users\Marion\Documents\Admin\Conférences\I2K\Biaflows" visible="true"/>
@@ -8,7 +8,7 @@
 <output/>
 </variables>
 </block>
-<block CommandLineID="" ID="1976271295" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Output folder" height="61" keepsResults="true" width="179" xLocation="247" yLocation="305">
+<block CommandLineID="outputFolder" ID="1976271295" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Output folder" height="61" keepsResults="true" width="179" xLocation="247" yLocation="305">
 <variables>
 <input>
 <variable ID="folder" name="folder" runtime="false" value="C:\Users\Marion\Documents\Admin\Conférences\I2K\Biaflows" visible="true"/>
@@ -16,7 +16,7 @@
 <output/>
 </variables>
 </block>
-<block CommandLineID="" ID="1439396112" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Gaussian blur radius" height="64" keepsResults="true" width="217" xLocation="208" yLocation="91">
+<block CommandLineID="radius" ID="1439396112" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Gaussian blur radius" height="64" keepsResults="true" width="217" xLocation="207" yLocation="91">
 <variables>
 <input>
 <variable ID="decimal" name="decimal" runtime="false" value="3.0" visible="true"/>
@@ -80,7 +80,7 @@
 </output>
 </variables>
 </block>
-<block ID="545058519" blockType="plugins.adufour.blocks.tools.text.AppendText" className="plugins.adufour.blocks.Blocks" collapsed="false" definedName="Append text" height="130" keepsResults="true" width="170" xLocation="66" yLocation="369">
+<block ID="545058519" blockType="plugins.adufour.blocks.tools.text.AppendText" className="plugins.adufour.protocols.Protocols" collapsed="false" definedName="Append text" height="130" keepsResults="true" width="170" xLocation="66" yLocation="369">
 <variables>
 <input>
 <variable ID="input" name="input" runtime="false" value="" visible="true"/>
@@ -100,7 +100,7 @@
 <output/>
 </variables>
 </block>
-<block ID="635999127" blockType="plugins.adufour.blocks.tools.text.AppendText" className="plugins.adufour.blocks.Blocks" collapsed="false" definedName="Append text" height="130" keepsResults="true" width="170" xLocation="275" yLocation="426">
+<block ID="635999127" blockType="plugins.adufour.blocks.tools.text.AppendText" className="plugins.adufour.protocols.Protocols" collapsed="false" definedName="Append text" height="130" keepsResults="true" width="170" xLocation="275" yLocation="426">
 <variables>
 <input>
 <variable ID="input" name="input" runtime="false" visible="true"/>
