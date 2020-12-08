@@ -41,7 +41,6 @@ RUN cp /biaflows-utilities/bin/* /usr/bin/
 RUN rm -r /biaflows-utilities
 
 # custom version of imagecodecs to make sure tifffile can read icy-generated images
-RUN pip install numpy==1.13.0
 RUN pip install Cython==0.29.6
 RUN pip install imagecodecs-lite==2019.2.22 
 
