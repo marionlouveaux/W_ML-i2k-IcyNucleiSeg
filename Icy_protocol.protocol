@@ -8,7 +8,7 @@
 <output/>
 </variables>
 </block>
-<block CommandLineID="outputFolder" ID="1976271295" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Output folder" height="61" keepsResults="true" width="179" xLocation="17" yLocation="318">
+<block CommandLineID="outputFolder" ID="1976271295" blockType="plugins.adufour.blocks.tools.input.Folder" className="plugins.adufour.blocks.tools.input.Folder" collapsed="false" definedName="Output folder" height="61" keepsResults="true" width="179" xLocation="16" yLocation="288">
 <variables>
 <input>
 <variable ID="folder" name="folder" runtime="false" value="C:\Users\Marion\Documents\Admin\Conférences\I2K\Biaflows\results_from_icy_HKmeans2" visible="true"/>
@@ -16,7 +16,7 @@
 <output/>
 </variables>
 </block>
-<block CommandLineID="radius" ID="1439396112" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Gaussian blur radius" height="64" keepsResults="true" width="217" xLocation="7" yLocation="85">
+<block CommandLineID="radius" ID="1439396112" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Gaussian blur radius" height="64" keepsResults="true" width="217" xLocation="11" yLocation="74">
 <variables>
 <input>
 <variable ID="decimal" name="decimal" runtime="false" value="3.0" visible="true"/>
@@ -24,7 +24,7 @@
 <output/>
 </variables>
 </block>
-<block CommandLineID="" ID="1526619258" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="minsize" height="64" keepsResults="true" width="145" xLocation="7" yLocation="159">
+<block CommandLineID="" ID="1526619258" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="minsize" height="64" keepsResults="true" width="145" xLocation="24" yLocation="142">
 <variables>
 <input>
 <variable ID="decimal" name="decimal" runtime="false" value="200.0" visible="true"/>
@@ -32,7 +32,7 @@
 <output/>
 </variables>
 </block>
-<block CommandLineID="" ID="1585687346" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="maxsize" height="64" keepsResults="true" width="148" xLocation="14" yLocation="240">
+<block CommandLineID="" ID="1585687346" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="maxsize" height="64" keepsResults="true" width="148" xLocation="27" yLocation="213">
 <variables>
 <input>
 <variable ID="decimal" name="decimal" runtime="false" value="1000.0" visible="true"/>
@@ -40,9 +40,9 @@
 <output/>
 </variables>
 </block>
-<workflow ID="239936278" blockType="plugins.adufour.blocks.lang.FileBatch" className="plugins.adufour.blocks.lang.FileBatch" collapsed="false" definedName="File batch" height="685" keepsResults="true" width="1144" xLocation="259" yLocation="8">
+<workflow ID="239936278" blockType="plugins.adufour.blocks.lang.FileBatch" className="plugins.adufour.blocks.lang.FileBatch" collapsed="false" definedName="File batch" height="654" keepsResults="true" width="1144" xLocation="297" yLocation="12">
 <blocks>
-<block ID="1174766271" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="false" definedName="File to sequence" height="108" keepsResults="true" width="190" xLocation="249" yLocation="254">
+<block ID="1174766271" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="false" definedName="File to sequence" height="108" keepsResults="true" width="190" xLocation="253" yLocation="209">
 <variables>
 <input>
 <variable ID="input file" name="input file" runtime="false" visible="true"/>
@@ -78,7 +78,7 @@
 <output/>
 </variables>
 </block>
-<block ID="645754880" blockType="plugins.tprovoost.sequenceblocks.infos.GetOutputFilename" className="plugins.tprovoost.sequenceblocks.SequenceBlocks" collapsed="false" definedName="Get output filename" height="131" keepsResults="true" width="216" xLocation="291" yLocation="407">
+<block ID="645754880" blockType="plugins.tprovoost.sequenceblocks.infos.GetOutputFilename" className="plugins.tprovoost.sequenceblocks.SequenceBlocks" collapsed="false" definedName="Get output filename" height="131" keepsResults="true" width="216" xLocation="393" yLocation="329">
 <variables>
 <input>
 <variable ID="sequence" name="Sequence" runtime="false" visible="true"/>
@@ -90,7 +90,7 @@
 </output>
 </variables>
 </block>
-<block ID="545058519" blockType="plugins.adufour.blocks.tools.text.AppendText" className="plugins.adufour.protocols.Protocols" collapsed="false" definedName="Append text" height="130" keepsResults="true" width="170" xLocation="110" yLocation="501">
+<block ID="545058519" blockType="plugins.adufour.blocks.tools.text.AppendText" className="plugins.adufour.protocols.Protocols" collapsed="false" definedName="Append text" height="130" keepsResults="true" width="170" xLocation="380" yLocation="471">
 <variables>
 <input>
 <variable ID="input" name="input" runtime="false" visible="true"/>
@@ -118,11 +118,11 @@
 <links>
 <link dstBlockID="1174766271" dstVarID="input file" srcBlockID="239936278" srcVarID="file"/>
 <link dstBlockID="2004480613" dstVarID="Input" srcBlockID="1174766271" srcVarID="sequence"/>
+<link dstBlockID="645754880" dstVarID="sequence" srcBlockID="1174766271" srcVarID="sequence"/>
 <link dstBlockID="1059217403" dstVarID="object" srcBlockID="2004480613" srcVarID="binary sequence"/>
 <link dstBlockID="675892465" dstVarID="sequence" srcBlockID="2004480613" srcVarID="binary sequence"/>
-<link dstBlockID="675892465" dstVarID="file" srcBlockID="545058519" srcVarID="output"/>
-<link dstBlockID="645754880" dstVarID="sequence" srcBlockID="1174766271" srcVarID="sequence"/>
 <link dstBlockID="545058519" dstVarID="Suffix" srcBlockID="645754880" srcVarID="outFilename"/>
+<link dstBlockID="675892465" dstVarID="file" srcBlockID="545058519" srcVarID="output"/>
 </links>
 <variables>
 <input>
@@ -139,6 +139,9 @@
 <variable ID="2004480613:Max size (px)" blockID="2004480613" value="1000" visible="true"/>
 <variable ID="2004480613:Final threshold" blockID="2004480613" value="100.0" visible="false"/>
 <variable ID="1059217403:object" blockID="1059217403" value="" visible="false"/>
+<variable ID="645754880:sequence" blockID="645754880" value="No Sequence" visible="false"/>
+<variable ID="645754880:folder" blockID="645754880" value="false" visible="false"/>
+<variable ID="645754880:extension" blockID="645754880" value="false" visible="false"/>
 <variable ID="545058519:input" blockID="545058519" value="" visible="true"/>
 <variable ID="545058519:Separator" blockID="545058519" value="\" visible="false"/>
 <variable ID="545058519:Suffix" blockID="545058519" value="" visible="false"/>
@@ -147,9 +150,6 @@
 <variable ID="675892465:format" blockID="675892465" value="TIFF" visible="false"/>
 <variable ID="675892465:overwrite" blockID="675892465" value="true" visible="false"/>
 <variable ID="675892465:multiple file" blockID="675892465" value="false" visible="false"/>
-<variable ID="645754880:sequence" blockID="645754880" value="No Sequence" visible="false"/>
-<variable ID="645754880:folder" blockID="645754880" value="false" visible="false"/>
-<variable ID="645754880:extension" blockID="645754880" value="false" visible="false"/>
 </input>
 <output>
 <variable ID="iteration" blockID="239936278" visible="true"/>
@@ -157,8 +157,8 @@
 <variable ID="1174766271:sequence" blockID="1174766271" visible="false"/>
 <variable ID="2004480613:binary sequence" blockID="2004480613" visible="false"/>
 <variable ID="2004480613:output regions" blockID="2004480613" visible="false"/>
-<variable ID="545058519:output" blockID="545058519" visible="false"/>
 <variable ID="645754880:outFilename" blockID="645754880" visible="false"/>
+<variable ID="545058519:output" blockID="545058519" visible="false"/>
 </output>
 </variables>
 </workflow>
