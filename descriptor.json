@@ -1,5 +1,5 @@
 {
-    "name": "W_ML-i2k-IcyNucleiSeg",
+    "name": "ML-i2k-IcyNucleiSeg",
     "container-image": {
         "image": "marionlouveaux/w_ml-i2k-icynucleiseg",
         "type": "singularity"
