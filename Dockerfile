@@ -16,7 +16,7 @@ RUN git clone https://github.com/cytomine-uliege/Cytomine-python-client.git && \
 RUN apt-get update && apt-get install -y unzip wget && \
     mkdir -p /icy && \
     cd /icy && \
-    wget -O icy.zip https://zenodo.org/record/3562103/files/icy_1.9.9.1_with_plugins.zip?download=1 && \
+    wget -O icy.zip http://icy.bioimageanalysis.org/download-file/?id=79911 && \
     unzip icy.zip && \
     rm -rf icy.zip
 
@@ -40,9 +40,6 @@ RUN cp /biaflows-utilities/bin/* /usr/bin/
 # cleaning
 RUN rm -r /biaflows-utilities
 
-# custom version of imagecodecs to make sure tifffile can read icy-generated images
-RUN pip install Cython==0.29.6
-RUN pip install imagecodecs-lite==2019.2.22 
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Install Protocol
