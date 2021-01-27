@@ -126,7 +126,43 @@ As the value of the parameter can be modified directly on Biaflows when running 
         }
 ```
 
+## Docker commands
 
+### To build the container           
+We will name the container "icyseg".
+*In Windows command prompt*          
+The installation of [Docker Desktop](https://www.docker.com/products/docker-desktop) is recommended to manage images and containers.         
+ 
+```bash
+cd path-to-the-folder-containing-the-Dockerfile-wrapper.py-and-.protocol-file
+docker build -t icyseg .
+```
+
+*In Linux shell*            
+
+```bash
+sudo docker build -t icyseg .
+```
+
+## To run an image        
+
+To test if the workflow is running "locally". This avoids having to make a new version of the workflow (which triggers a new build on DockerHub, which triggers a new test of the workflow on the Biaflows Sandbox server).                
+Get public XXXXXXXXX and private YYYYYYYYYY keys from the Biaflows sandbox server: menu up right -> Account            
+software_id and project_id must match the values given to the existing workflow on Biaflows and the problem (here "Nuclei-segmentation").        
+- To find the project_id, go to Problems, click on the problem (here "Nuclei-segmentation") related to your workflow, look at the address of the website (here: "https://biaflows-sandbox.neubias.org/#/project/205081/images") and take the number after "project/" (here: "205081").      
+- To find the software_id, go to Workflows, search for your workflow and click on it. Look at the address (here: "https://biaflows-sandbox.neubias.org/#/software/1669677" for ML-i2k-IcyNucleiSeg (v0.0.5)) and take the number after "software/" (here: "1669677").          
+
+Give values to all input parameters (here "radius").           
+
+*In Windows command prompt* 
+```bash
+docker run -it icyseg --host https://biaflows-sandbox.neubias.org --public_key XXXXXXXXX --private_key YYYYYYYYYY --software_id 1669677 --project_id 205081 --radius 3
+```
+
+*In Linux shell*
+```bash
+sudo docker run -it icyseg --host https://biaflows-sandbox.neubias.org --public_key XXXXXXXXX --private_key YYYYYYYYYY --software_id 1669677 --project_id 205081 --radius 3
+```
 
 
 

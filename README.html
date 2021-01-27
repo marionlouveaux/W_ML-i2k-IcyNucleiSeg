@@ -464,6 +464,31 @@ ADD wrapper.py /app/wrapper.py</code></pre>
             &quot;optional&quot;: true
         }</code></pre>
 </div>
+<div id="docker-commands" class="section level2">
+<h2>Docker commands</h2>
+<div id="to-build-the-container" class="section level3">
+<h3>To build the container</h3>
+<p>We will name the container “icyseg”. <em>In Windows command prompt</em><br />
+The installation of <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> is recommended to manage images and containers.</p>
+<pre class="bash"><code>cd path-to-the-folder-containing-the-Dockerfile-wrapper.py-and-.protocol-file
+docker build -t icyseg .</code></pre>
+<p><em>In Linux shell</em></p>
+<pre class="bash"><code>sudo docker build -t icyseg .</code></pre>
+</div>
+</div>
+<div id="to-run-an-image" class="section level2">
+<h2>To run an image</h2>
+<p>To test if the workflow is running “locally”. This avoids having to make a new version of the workflow (which triggers a new build on DockerHub, which triggers a new test of the workflow on the Biaflows Sandbox server).<br />
+Get public XXXXXXXXX and private YYYYYYYYYY keys from the Biaflows sandbox server: menu up right -&gt; Account<br />
+software_id and project_id must match the values given to the existing workflow on Biaflows and the problem (here “Nuclei-segmentation”).<br />
+- To find the project_id, go to Problems, click on the problem (here “Nuclei-segmentation”) related to your workflow, look at the address of the website (here: “<a href="https://biaflows-sandbox.neubias.org/#/project/205081/images" class="uri">https://biaflows-sandbox.neubias.org/#/project/205081/images</a>”) and take the number after “project/” (here: “205081”).<br />
+- To find the software_id, go to Workflows, search for your workflow and click on it. Look at the address (here: “<a href="https://biaflows-sandbox.neubias.org/#/software/1669677" class="uri">https://biaflows-sandbox.neubias.org/#/software/1669677</a>” for ML-i2k-IcyNucleiSeg (v0.0.5)) and take the number after “software/” (here: “1669677”).</p>
+<p>Give values to all input parameters (here “radius”).</p>
+<p><em>In Windows command prompt</em></p>
+<pre class="bash"><code>docker run -it icyseg --host https://biaflows-sandbox.neubias.org --public_key XXXXXXXXX --private_key YYYYYYYYYY --software_id 1669677 --project_id 205081 --radius 3</code></pre>
+<p><em>In Linux shell</em></p>
+<pre class="bash"><code>sudo docker run -it icyseg --host https://biaflows-sandbox.neubias.org --public_key XXXXXXXXX --private_key YYYYYYYYYY --software_id 1669677 --project_id 205081 --radius 3</code></pre>
+</div>
 </div>
 
 
